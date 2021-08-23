@@ -19,22 +19,65 @@ router.post('/register', async (req, res) => {
 });
 
 //activate user with activate token
-router.get('/activate/:activateTokens', async (req, res) => {
+router.get('/activate/:activateToken', async (req, res) => {
     try{
-        const activateTokens = req.params.activateTokens;
-        console.log(typeof(activateTokens));
-        const user = await User.findOne({activateTokens: activateTokens});
-        
+        //get user with activate token
+        const user = await User.findOne({activateToken: req.params.activateToken});
+        //check if token is not expired
+        if(user.activateTokenExpired()){
+            user.activateToken = null;
+            res.status(400).json({success: false, err: 'Activation token expired'});
+            res.redirect('/reactivate');
+        }
         if(user){
-            user.isActivated = true;
+            user.isActive = true;
+            user.activateToken = null;
             await user.save();
             res.json({
                 success: true,
                 message: 'User activated successfully'
             });
         }
+    }
+    catch(err){
+        res.status(400).json({success: false, err: err.message});
+    }
+});
+
+router.post('/reactivate', async (req, res) => {
+    try{
+        const user = await User.findByCredentials(req.body.email, req.body.password);
+        if(user){
+            if(user.activateToken === null){
+                const activationToken = await user.generateActivationToken();
+                await user.save();
+                res.json({
+                    success: true,
+                    message: 'New Token was generated',
+                    user: user,
+                    activateTokens: activationToken
+                });
+            }
+            else{
+                if(user.isActive){
+                    res.status(400).json({success: false, err: 'User already activated'});
+                }
+                else{
+                    user.activateToken = null;
+                    const activationToken = await user.generateActivationToken();
+                    await user.save();
+                    res.json({
+                        success: true,
+                        message: 'New Token was generated',
+                        user: user,
+                        activateTokens: activationToken
+                    });
+                }
+
+            }
+        }
         else{
-            res.status(400).json({success: false, err: 'Invalid activate token'});
+            res.status(400).json({success: false, err: 'Invalid email or password'});
         }
     }
     catch(err){

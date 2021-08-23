@@ -75,11 +75,9 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    activateTokens: [{
-        token: {
-            type: String
-        }
-    }],
+    activateToken: {
+        type: String,
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -136,13 +134,12 @@ userSchema.methods.generateAuthToken = async function () {
 //generate activation token 
 userSchema.methods.generateActivationToken = async function () {
     const user = this;
-    //token should be expire after 24 hours
-    const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET_ACTIVATE, {expiresIn: '24h'});
-    user.activateTokens = user.activateTokens.concat({token});
-    await user.save()
+    //generate token that is valid for 24 hours
+    const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET_ACTIVATE, { expiresIn: '24h' });
+    user.activateToken = token;
+    await user.save();
     return token;
 };
-
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
