@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/KingDark2010/mean-stack-ecommerce-app#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
