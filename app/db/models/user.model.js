@@ -134,12 +134,36 @@ userSchema.methods.generateAuthToken = async function () {
 //generate activation token 
 userSchema.methods.generateActivationToken = async function () {
     const user = this;
-    //generate token that is valid for 24 hours
+    //generate token that is valid for 24h
     const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET_ACTIVATE, { expiresIn: '24h' });
     user.activateToken = token;
     await user.save();
     return token;
 };
+
+// check if activationtoken expirded
+userSchema.methods.activateTokenExpired = async function () {
+    const user = this;
+    const token = user.activateToken;
+    if (!token) {
+        return true;
+    }
+    const decoded =  jwt.decode(token, process.env.JWT_SECRET_ACTIVATE);
+    console.log(decoded.exp <= parseInt(Date.now() / 1000))
+    if (decoded.exp <= parseInt(Date.now() / 1000)) {
+        return true;
+    }
+    return false;
+};
+
+//activate user 
+userSchema.methods.activate = async function () {
+    const user = this;
+    user.isActive = true;
+    user.activateToken = null;
+    await user.save();
+};
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

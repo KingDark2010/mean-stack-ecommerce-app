@@ -23,20 +23,26 @@ router.get('/activate/:activateToken', async (req, res) => {
     try{
         //get user with activate token
         const user = await User.findOne({activateToken: req.params.activateToken});
-        //check if token is not expired
-        if(user.activateTokenExpired()){
-            user.activateToken = null;
-            res.status(400).json({success: false, err: 'Activation token expired'});
-            res.redirect('/reactivate');
-        }
         if(user){
-            user.isActive = true;
-            user.activateToken = null;
-            await user.save();
-            res.json({
-                success: true,
-                message: 'User activated successfully'
-            });
+            if(user.isActive){
+                user.activateToken = null;
+                res.status(400).json({success: false, err: 'User already activated'});
+            }
+            if(user.activateTokenExpired() == true){
+                user.activateToken = null;
+                res.status(400).json({success: false, err: 'Activation token expired'});
+            }
+            else{
+                //update user
+                user.activate();
+                res.json({
+                    success: true,
+                    message: 'User activated successfully'
+                });
+            }
+        }
+        else{
+            res.status(400).json({success: false, err: 'Invalid activation token'});
         }
     }
     catch(err){
@@ -44,6 +50,7 @@ router.get('/activate/:activateToken', async (req, res) => {
     }
 });
 
+//reactivate user
 router.post('/reactivate', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password);
