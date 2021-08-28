@@ -67,6 +67,10 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    isSeller: {
+        type: Boolean,
+        default: false
+    },
     isActive: {
         type: Boolean,
         default: false
@@ -154,6 +158,38 @@ userSchema.methods.activateTokenExpired = async function () {
         return true;
     }
     return false;
+};
+
+//generate deactivate token
+userSchema.methods.generateDeactivateToken = async function () {
+    const user = this;
+    //generate token that is valid for 24h
+    const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET_DEACTIVATE, { expiresIn: '24h' });
+    user.deactivateToken = token;
+    await user.save();
+    return token;
+};
+
+// check if deactivate token expired
+userSchema.methods.deactivateTokenExpired = async function () {
+    const user = this;
+    const token = user.deactivateToken;
+    if (!token) {
+        return true;
+    }
+    const decoded =  jwt.decode(token, process.env.JWT_SECRET_DEACTIVATE);
+    console.log(decoded.exp <= parseInt(Date.now() / 1000))
+    if (decoded.exp <= parseInt(Date.now() / 1000)) {
+        return true;
+    }
+    return false;
+};
+
+//deactivate user
+userSchema.methods.deactivate = async function () {
+    const user = this;
+    user.isActive = false;
+    await user.save();
 };
 
 //activate user 

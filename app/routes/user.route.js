@@ -1,109 +1,171 @@
 const User = require('../db/models/user.model');
 const router = require('express').Router();
+const responseCreator = require('../helpers/response.helper')
+
+
 
 router.post('/register', async (req, res) => {
     try{
         const user = new User(req.body);
-        const activationToken = await user.generateActivationToken();
+        await user.generateActivationToken();
         await user.save();
-        res.json({
-            success: true,
-            message: 'User registered successfully',
-            user: user,
-            activateTokens: activationToken
-        });
+        res.status(201).send(responseCreator(201, user, 'user Created successfully'));
     }
     catch(err){
-        res.status(400).json({success: false, err: err.message});
+        res.status(500).send(responseCreator(500, null, err.message));
     }
 });
 
 //activate user with activate token
-router.get('/activate/:activateToken', async (req, res) => {
+router.post('/activate/:activateToken', async (req, res) => {
     try{
-        //get user with activate token
         const user = await User.findOne({activateToken: req.params.activateToken});
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'user not found'));
+        }
         if(user){
             if(user.isActive){
                 user.activateToken = null;
-                res.status(400).json({success: false, err: 'User already activated'});
+                await user.save();
+                return res.status(200).send(responseCreator(200, user, 'user already activated'));
             }
             if(user.activateTokenExpired() == true){
                 user.activateToken = null;
-                res.status(400).json({success: false, err: 'Activation token expired'});
+                await user.save();
+                return res.status(400).send(responseCreator(400, null, 'token expired'));
             }
-            else{
-                //update user
-                user.activate();
-                res.json({
-                    success: true,
-                    message: 'User activated successfully'
-                });
-            }
-        }
-        else{
-            res.status(400).json({success: false, err: 'Invalid activation token'});
+            user.isActive = true;
+            user.activateToken = null;
+            await user.save();
+            return res.status(200).send(responseCreator(200, user, 'user activated successfully'));
         }
     }
     catch(err){
-        res.status(400).json({success: false, err: err.message});
+        res.status(500).send(responseCreator(500, null, err.message));
     }
 });
+
+
 
 //reactivate user
 router.post('/reactivate', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password);
-        if(user){
-            if(user.activateToken === null){
-                const activationToken = await user.generateActivationToken();
-                await user.save();
-                res.json({
-                    success: true,
-                    message: 'New Token was generated',
-                    user: user,
-                    activateTokens: activationToken
-                });
-            }
-            else{
-                if(user.isActive){
-                    res.status(400).json({success: false, err: 'User already activated'});
-                }
-                else{
-                    user.activateToken = null;
-                    const activationToken = await user.generateActivationToken();
-                    await user.save();
-                    res.json({
-                        success: true,
-                        message: 'New Token was generated',
-                        user: user,
-                        activateTokens: activationToken
-                    });
-                }
-
-            }
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'user not found'));
         }
-        else{
-            res.status(400).json({success: false, err: 'Invalid email or password'});
+        if(user){
+            if(user.isActive){
+                return res.status(200).send(responseCreator(200, user, 'user already activated'));
+            }
+            user.activateToken = null
+            await user.generateActivationToken();
+            await user.save();
+            return res.status(200).send(responseCreator(200, user, 'user reactivated successfully'));
         }
     }
     catch(err){
-        res.status(400).json({success: false, err: err.message});
+        res.status(500).send(responseCreator(500, null, err.message));
     }
 });
 
-router.post('/login', async(req, res)=>{
+// login user
+router.post('/login', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password);
-        const token = await user.generateAuthToken();
-        res.status(200).json({success: true, token});
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'user not found'));
+        }
+        if(user){
+            const token = await user.generateAuthToken();
+            return res.status(200).send(responseCreator(200, {user, token}, 'user logged in successfully'));
+        }
     }
     catch(err){
-        res.status(400).json({success: false, err: err.message});
+        res.status(500).send(responseCreator(500, null, err.message));
     }
 });
 
-router.get('/login',)
 
+
+// get all users route
+router.get('/all', async (req, res) => {
+    try{
+        const users = await User.find({});
+        if(!users){
+            return res.status(404).send(responseCreator(404, null, 'no users found'));
+        }
+        if(users){
+            return res.status(200).send(responseCreator(200, users, 'users found successfully'));
+        }
+    }
+    catch(err){
+        res.status(500).send(responseCreator(500, null, err.message));
+    }
+});
+
+// get user by id route
+router.get('/:id', async (req, res) => {
+    try{
+        const user = await User.findById(req.params.id);
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'user not found'));
+        }
+        if(user){
+            return res.status(200).send(responseCreator(200, user, 'user found successfully'));
+        }
+    }
+    catch(err){
+        res.status(500).send(responseCreator(500, null, err.message));
+    }
+});
+
+// update user route
+router.patch('/update/:id', async (req, res) => {
+    try{
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'user not found'));
+        }
+        if(user){
+            return res.status(200).send(responseCreator(200, user, 'user updated successfully'));
+        }
+    }
+    catch(err){
+        res.status(500).send(responseCreator(500, null, err.message));
+    }
+});
+
+// delete user route
+router.delete('/delete/:id', async (req, res) => {
+    try{
+        const user = await User.findByIdAndDelete(req.params.id);
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'user not found'));
+        }
+        if(user){
+            return res.status(200).send(responseCreator(200, user, 'user deleted successfully'));
+        }
+    }
+    catch(err){
+        res.status(500).send(responseCreator(500, null, err.message));
+    }
+});
+
+// deactivate user route
+/* router.patch('/deactivate/:id', async (req, res) => {
+    try{
+        const user = await User.findByIdAndUpdate(req.params.id, {isActive: false}, {new: true});
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'user not found'));
+        }
+        if(user){
+            return res.status(200).send(responseCreator(200, user, 'user deactivated successfully'));
+        }
+    }
+    catch(err){
+        res.status(500).send(responseCreator(500, null, err.message));
+    }
+}); */
 
 module.exports = router;
