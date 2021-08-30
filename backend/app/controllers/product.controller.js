@@ -38,6 +38,25 @@ const getAllProducts = async (req, res) => {
     }
 }
 
+//make upload galary function
+
+const uploadImages = async (req, res) => {
+    try {
+        const product = await Product.findOne({ _id: req.params.id });
+        if (!product) {
+            return res.status(404).send(responseCreator(404, null, 'Product not found'));
+        }
+        if(product.images.length >= 5){
+            return res.status(400).send(responseCreator(400, null, 'You can not upload more than 5 images'));
+        }
+        product.images = req.files.map(file => file.path);
+        await product.save();
+        res.status(201).send(responseCreator(201, product, 'Image added successfully'));
+    } catch (error) {
+        res.status(500).send(responseCreator(500, null, error.message));
+    }
+}
+
 const getProductById = async (req, res) => {
     try {
         // find product by id and populate category and seller
@@ -113,4 +132,4 @@ const getDiscountedProducts = async (req, res) => {
 }
 
 
-module.exports = { addProduct, getAllProducts, getProductById, updateProduct, deleteProduct, countProducts, getFeaturedProducts, getDiscountedProducts };
+module.exports = { addProduct, getAllProducts, getProductById, updateProduct, deleteProduct, countProducts, getFeaturedProducts, getDiscountedProducts, uploadImages };

@@ -32,4 +32,8 @@ router.get('/featured', productController.getFeaturedProducts);
 //get discounted products
 router.get('/discounted', productController.getDiscountedProducts);
 
+//add upload galary route
+router.post('/upload/:id', auth.AuthSeller, uploader.array('images', 5), productController.uploadImages);
+
+
 module.exports = router;
