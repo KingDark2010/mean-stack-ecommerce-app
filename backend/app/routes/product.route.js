@@ -11,7 +11,7 @@ const uploader = require('../middleware/uploader');
 router.post('/add', auth.AuthSeller, uploader.single('image'), productController.addProduct);
 
 // get all products
-router.get('/all', productController.getAllProducts);
+router.get('/', productController.getAllProducts);
 
 // get product by id
 router.get('/:id', productController.getProductById);
