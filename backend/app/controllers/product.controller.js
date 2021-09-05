@@ -2,6 +2,7 @@ const Product = require('../db/models/product.model');
 const Category = require('../db/models/category.model');
 const User = require('../db/models/user.model');
 const responseCreator = require('../helpers/response.helper')
+const fs = require('fs');
 
 const addProduct = async (req, res) => {
     try {
@@ -131,5 +132,31 @@ const getDiscountedProducts = async (req, res) => {
     }
 }
 
+//delete image
+const deleteImage = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if(!product) {
+            return res.status(404).send(responseCreator(404, null, 'No product found'));
+        }
+        if(product.image.length === 0){
+            return res.status(400).send(responseCreator(400, null, 'No image to delete'));
+        }
+        const image = product.image.find(image => image === req.params.image);
+        if(!image) {
+            return res.status(404).send(responseCreator(404, null, 'No image found'));
+        }
+        fs.unlink(path.join(__dirname, '..', '..', 'public/single', image), (err) => {
+            if(err) {
+                return res.status(500).send(responseCreator(500, null, err.message));
+            }
+            product.image.splice(product.image.indexOf(image), 1);
+            product.save();
+            res.status(200).send(responseCreator(200, product, 'Image deleted successfully'));
+        });
+    } catch (error) {
+        res.status(500).send(responseCreator(500, null, error.message));
+    }
+}
 
 module.exports = { addProduct, getAllProducts, getProductById, updateProduct, deleteProduct, countProducts, getFeaturedProducts, getDiscountedProducts, uploadImages };
