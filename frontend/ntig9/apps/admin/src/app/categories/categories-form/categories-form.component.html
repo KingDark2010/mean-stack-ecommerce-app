@@ -1,0 +1,18 @@
+<div class="category">
+  <h1 class="h1"> Add Category</h1>
+  <div class="card">
+
+    <form class="my-3 mx-3" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="exampleInputName" class="form-label">Category Name</label>
+        <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputIcon" class="form-label">Category Icon</label>
+        <input formControlName="icon" type="text" class="form-control" id="exampleInputPassword1">
+      </div>
+      <button type="submit" class="btn btn-primary">Add Category</button>
+      <a class="btn btn-warning" routerLink="/categories" role="button">Cancel</a>
+    </form>
+  </div>
+</div>

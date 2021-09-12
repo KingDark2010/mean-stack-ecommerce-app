@@ -1,0 +1,28 @@
+<div class="admin-category">
+  <h1 class="h1">Categories</h1>
+  <div class="card">
+    <h5 class="card-header">List of Categories</h5>
+    <div class="card-body">
+      <a routerLink="/form" class="btn btn-success">New</a>
+    </div>
+  </div>
+  <div class="card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Color</th>
+          <th scope="col">Icon</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of categories">
+        <tr>
+          <td>{{item._id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.color}}</td>
+          <td>{{item.icon}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
