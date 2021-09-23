@@ -10,6 +10,8 @@ import { CategoriesListComponent } from './categories/categories-list/categories
 import { HttpClientModule } from '@angular/common/http';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   {
@@ -27,6 +29,10 @@ const routes: Routes = [
       {
         path: 'form',
         component: CategoriesFormComponent
+      },
+      {
+        path: 'form/:id',
+        component: CategoriesFormComponent
       }
     ]
   }];
@@ -38,7 +44,9 @@ const routes: Routes = [
         RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
         HttpClientModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent],

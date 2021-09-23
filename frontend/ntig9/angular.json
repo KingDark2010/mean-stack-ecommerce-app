@@ -20,7 +20,7 @@
                             "apps/admin/src/favicon.ico",
                             "apps/admin/src/assets"
                         ],
-                        "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css","node_modules/bootstrap-icons/font/bootstrap-icons.css"],
+                        "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css","node_modules/bootstrap-icons/font/bootstrap-icons.css", "node_modules/ngx-toastr/toastr.css"],
                         "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
                     },
                     "configurations": {
@@ -137,7 +137,7 @@
                             "apps/ecommerce-store/src/favicon.ico",
                             "apps/ecommerce-store/src/assets"
                         ],
-                        "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css"],
+                        "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css","node_modules/bootstrap-icons/font/bootstrap-icons.css", "node_modules/ngx-toastr/toastr.css"],
                         "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
                     },
                     "configurations": {
