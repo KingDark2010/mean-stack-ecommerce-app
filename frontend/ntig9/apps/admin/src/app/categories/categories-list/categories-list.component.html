@@ -3,7 +3,7 @@
   <div class="card">
     <h5 class="card-header">List of Categories</h5>
     <div class="card-body">
-      <a routerLink="/form" class="btn btn-success">New</a>
+      <a routerLink="/categories/form" class="btn btn-success">New</a>
     </div>
   </div>
   <div class="card">
@@ -12,7 +12,6 @@
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Name</th>
-          <th scope="col">Color</th>
           <th scope="col">Icon</th>
           <th scope="col">Action</th>
         </tr>
@@ -21,31 +20,10 @@
         <tr>
           <td>{{item._id}}</td>
           <td>{{item.name}}</td>
-          <td>{{item.color}}</td>
-          <td>{{item.icon}}</td>
+          <td><i class="{{item.icon}} fs-2" style="color:{{item.color}};"></i></td>
           <td>
-            <a routerLink="/form/{{item._id}}" type="button" class="btn btn-outline-primary mx-3"><i class="bi bi-pencil-square"></i></a>
-            <button  type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
-                class="bi bi-trash-fill"></i></button>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-              aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    you are about to delete this item: {{item.name}}
-                  </div>
-                  <div class="modal-footer">
-                    <button (click)="cancelbtn()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button (click)="deleteCategory(item._id)" type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a routerLink="/categories/form/{{item._id}}" type="button" class="btn btn-outline-primary mx-3"><i class="bi bi-pencil-square"></i></a>
+            <button  (click)="deleteCategory(item._id)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-trash-fill"></i></button>
           </td>
         </tr>
       </tbody>

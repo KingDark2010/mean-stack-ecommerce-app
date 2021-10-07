@@ -5,17 +5,21 @@
     <form class="my-3 mx-3" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <label for="exampleInputName" class="form-label">Category Name</label>
-        <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <input formControlName="name" type="text" class="form-control" id="category-id" aria-describedby="emailHelp">
         <div *ngIf="controls.name.invalid && isSubmitted" class="alert alert-danger" role="alert">
           Name is required and must be at least 6 characters long.
         </div>
       </div>
       <div class="mb-3">
-        <label for="exampleInputIcon" class="form-label">Category Icon</label>
-        <input formControlName="icon" type="text" class="form-control" id="exampleInputPassword1">
+        <label for="exampleInputIcon" class="form-label">Category Icon (use one of bootstrap icon classes example: bi bi-app-indicator)</label>
+        <input formControlName="icon" type="text" class="form-control" id="icon-id">
         <div *ngIf="controls.icon.invalid && isSubmitted" class="alert alert-danger" role="alert">
           icon is required.
         </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputColor" class="form-label">Category Color</label>
+        <input  [(colorPicker)]="color"  [style.background]="color" (colorPickerChange)="updatePickedColor($event)" formControlName="color" type="text" class="form-control" id="color-id">
       </div>
       <button type="submit" class="btn btn-primary">{{btn}}</button>
       <a (click)="editCancel()" class="btn btn-warning" role="button">Cancel</a>

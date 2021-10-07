@@ -12,8 +12,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoriesFormComponent implements OnInit {
 
-  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  editMode: boolean = false;
+
+  editMode = false;
+
+
 
   get title() {
     return this.editMode ? 'Edit Category' : 'Add Category';
@@ -22,16 +24,22 @@ export class CategoriesFormComponent implements OnInit {
   get btn() {
     return this.editMode ? 'Update' : 'Add';
   }
-  categoryForm!: FormGroup;
-  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  isSubmitted: boolean = false;
 
+  color!: string;
+
+  categoryForm!: FormGroup;
+
+  isSubmitted = false;
+  updatePickedColor(value: string) {
+    this.categoryForm.get('color')?.patchValue(value);
+  }
   constructor(private _fb: FormBuilder, private _categoriesService: CategoriesService, private toastr: ToastrService, private location: Location, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.categoryForm = this._fb.group({
       name: ['', [Validators.required, Validators.minLength(6)]],
-      icon: ['', [Validators.required]]
+      icon: ['', [Validators.required]],
+      color: ['', [Validators.required]]
     });
     this._checkEditMode();
   }
@@ -51,6 +59,7 @@ export class CategoriesFormComponent implements OnInit {
   }
   onSubmit() {
     this.isSubmitted = true;
+    console.log(this.categoryForm.value);
     if (this.categoryForm.valid) {
       if (this.editMode) {
         this.route.params.subscribe(params => {
@@ -87,13 +96,16 @@ export class CategoriesFormComponent implements OnInit {
 
   private _checkEditMode() {
     this.route.params.subscribe(params => {
+
       if (params.id) {
         this.editMode = true;
         this._categoriesService.getCategory(params.id).subscribe(category => {
           this.categoryForm.setValue({
             name: category.data.name,
-            icon: category.data.icon
+            icon: category.data.icon,
+            color: category.data.color
           });
+          this.color = this.categoryForm.value.color;
         });
       }
     });

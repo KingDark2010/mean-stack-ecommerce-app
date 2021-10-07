@@ -1,0 +1,96 @@
+<div class="category">
+  <h1 class="h1"> {{title}}</h1>
+  <div class="card">
+
+    <form class="my-3 mx-3" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <!-- first raw in the form starts here -->
+      <div class="d-flex bd-highlight">
+        <div class="mb-3 p-2 flex-fill bd-highlight form-floating">
+          <input type="text" class="form-control" id="floatingInput" formControlName="name" placeholder="name@example.com">
+          <label for="floatingInput">Name</label>
+          <div *ngIf="controls.name.invalid && isSubmitted" class="alert alert-danger" role="alert">
+            Name is required and must be at least 6 characters long.
+          </div>
+        </div>
+        <div class="mb-3 p-2 flex-fill bd-highlight form-floating">
+          <input type="text" class="form-control" id="floatingInput" formControlName="brand" placeholder="name@example.com">
+          <label for="floatingInput">Brand</label>
+          <div *ngIf="controls.name.invalid && isSubmitted" class="alert alert-danger" role="alert">
+            this filed must not be empty
+          </div>
+        </div>
+        <div class="mb-3 p-2 flex-fill bd-highlight form-floating">
+          <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="seller">
+            <option *ngFor="let user of users" value="{{user._id}}">{{user.firstName}}</option>
+          </select>
+          <label for="floatingSelect">Seller</label>
+          <div *ngIf="controls.name.invalid && isSubmitted" class="alert alert-danger" role="alert">
+            this filed must not be empty
+          </div>
+        </div>
+      </div>
+      <!-- first raw in the form ends here -->
+      <!-- second raw in the form starts here -->
+
+      <div class="d-flex bd-highlight">
+        <div class="mb-3 p-2 flex-fill bd-highlight form-floating">
+          <input type="number" class="form-control" id="floatingInput" formControlName="price" placeholder="name@example.com">
+          <label for="floatingInput">Price</label>
+          <div *ngIf="controls.name.invalid && isSubmitted" class="alert alert-danger" role="alert">
+            only numbers are allowed
+          </div>
+        </div>
+        <div class="mb-3 p-2 flex-fill bd-highlight form-floating">
+          <input type="number" class="form-control" id="floatingInput" formControlName="countInStock" placeholder="name@example.com">
+          <label for="floatingInput">Stock</label>
+          <div *ngIf="controls.name.invalid && isSubmitted" class="alert alert-danger" role="alert">
+            max value is 100
+          </div>
+        </div>
+        <div class="mb-3 p-2 flex-fill bd-highlight form-floating">
+          <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="category">
+            <option *ngFor="let item of categories" value="{{item._id}}">{{item.name}}</option>
+          </select>
+          <label for="floatingSelect">Category</label>
+          <div *ngIf="controls.name.invalid && isSubmitted" class="alert alert-danger" role="alert">
+            category must be selected
+          </div>
+        </div>
+      </div>
+      <!-- second raw in the form ends here -->
+      <!-- third raw in the form starts here -->
+      <div class="d-flex bd-highlight">
+        <div class="mb-3 p-2 form-floating" style="min-width: 100%">
+          <textarea style="min-width: 100%" class="form-control" placeholder="Leave a comment here" id="floatingTextarea" formControlName="descriptionLite"></textarea>
+          <label for="floatingTextarea">Small Description</label>
+        </div>
+      </div>
+      <!-- third raw in the form ends here -->
+      <!-- fourth raw in the form starts here -->
+      <div class="d-flex bd-highlight">
+        <div class="mb-3 p-2 form-floating" style="min-width: 100%">
+          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description"></textarea>
+          <label for="floatingTextarea2">Full Descriptions</label>
+        </div>
+      </div>
+      <!-- fourth raw in the form ends here -->
+      <!-- fifth raw in the form starts here -->
+      <div class="d-flex bd-highlight">
+        <div class="mb-3 p-2 flex-fill bd-highlight">
+          <label for="formFile" class="form-label">Product Image</label>
+          <input class="form-control" type="file" id="formFile" (change)="onImageUpload($event)">
+        </div>
+      </div>
+      <!-- fifth raw in the form ends here -->
+      <!-- sixth raw in the form starts here -->
+      <div class="form-check form-switch mb-3 ">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" formControlName="isFeatured">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Is Futured</label>
+      </div>
+      <!-- sixth raw in the form ends here -->
+      <button type="submit" class="btn btn-primary">{{btn}}</button>
+      <a (click)="editCancel()" class="btn btn-warning" role="button">Cancel</a>
+    </form>
+  </div>
+</div>
+

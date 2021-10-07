@@ -29,7 +29,7 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find();
+        const products = await Product.find().populate('category').populate('seller');
         if(!products) {
             return res.status(404).send(responseCreator(404, null, 'No products found'));
         }
@@ -73,10 +73,13 @@ const getProductById = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if(!product) {
             return res.status(404).send(responseCreator(404, null, 'No product found'));
         }
+        console.log(product);
+        console.log("break break break")
+        console.log(req.body);
         res.status(200).send(responseCreator(200, product, 'Product updated successfully'));
     } catch (error) {
         res.status(500).send(responseCreator(500, null, error.message));

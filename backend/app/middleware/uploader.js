@@ -4,7 +4,7 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        const location = path.join("public/single",'')// (req.user._id).toString() )
+        const location = path.join("../frontend/ntig9/apps/admin/src/assets/public/single",'')// (req.user._id).toString() )
         fs.mkdir(location, (err)=>{})
         cb(null, location)
     },

@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
+
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CategoriesObject, CategoryObject } from '@ntig9/products';
-//import { Categories } from '../interfaces/categories';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,8 +24,8 @@ export class CategoriesService {
   deleteCategory(categoryID: string | undefined): Observable<CategoryObject> {
     return this._http.delete<CategoryObject>(`${this.URL}category/delete/${categoryID}`);
   }
-  updateCategory(categoryID: string | undefined, update:CategoryObject): Observable<object> {
-    return this._http.put<object>(`${this.URL}category/update/${categoryID}`, update);
+  updateCategory(categoryID: string | undefined, update:CategoryObject): Observable<CategoryObject> {
+    return this._http.put<CategoryObject>(`${this.URL}category/update/${categoryID}`, update);
   }
   getCategory(categoryID: string | undefined): Observable<CategoryObject> {
     return this._http.get<CategoryObject>(`${this.URL}category/${categoryID}`);

@@ -12,6 +12,11 @@ import { CategoriesFormComponent } from './categories/categories-form/categories
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { ProductsListComponent } from './products/products-list/products-list.component';
+import { ProductsFormComponent } from './products/products-form/products-form.component';
+import { UsersFormComponent } from './users/users-form/users-form.component';
+import { UsersListComponent } from './users/users-list/users-list.component';
 
 const routes: Routes = [
   {
@@ -27,18 +32,42 @@ const routes: Routes = [
         component: CategoriesListComponent
       },
       {
-        path: 'form',
+        path: 'categories/form',
         component: CategoriesFormComponent
       },
       {
-        path: 'form/:id',
+        path: 'categories/form/:id',
         component: CategoriesFormComponent
+      },
+      {
+        path: 'products',
+        component: ProductsListComponent
+      },
+      {
+        path: 'products/form',
+        component: ProductsFormComponent
+      },
+      {
+        path: 'products/form/:id',
+        component: ProductsFormComponent
+      },
+      {
+        path: 'users',
+        component: UsersListComponent
+      },
+      {
+        path: 'users/form',
+        component: UsersFormComponent
+      },
+      {
+        path: 'users/form/:id',
+        component: UsersFormComponent
       }
     ]
   }];
 
 @NgModule({
-    declarations: [AppComponent, DashboardcontentComponent, SidebarComponent, DashboredComponent, CategoriesListComponent, CategoriesFormComponent],
+    declarations: [AppComponent, DashboardcontentComponent, SidebarComponent, DashboredComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent],
     imports: [
         BrowserModule,
         RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
@@ -46,7 +75,8 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
+        ColorPickerModule
     ],
     providers: [],
     bootstrap: [AppComponent],

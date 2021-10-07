@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Categories, CategoriesService } from '@ntig9/products';
+import { Category, CategoriesService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoriesListComponent implements OnInit {
 
-  categories:Categories[] = [];
+  categories:Category[] = [];
 
   constructor(private categoriesService: CategoriesService, private toastr: ToastrService) { }
 
@@ -19,7 +19,7 @@ export class CategoriesListComponent implements OnInit {
 
   deleteCategory(categoryID:string | undefined):void {
     this.categoriesService.deleteCategory(categoryID).subscribe(() => {
-      this.categories = this.categories.filter(c => c._id !== categoryID);
+      this.categories = this.categories.filter(category => category._id !== categoryID);
       this.toastr.success('Success', 'Category Deleted', {
         timeOut: 3000,
       });

@@ -8,7 +8,7 @@ const auth = require('../middleware/auth');
 const uploader = require('../middleware/uploader');
 
 // add product
-router.post('/add', auth.AuthSeller, uploader.single('image'), productController.addProduct);
+router.post('/add', uploader.single('image'), productController.addProduct);
 
 // get all products
 router.get('/', productController.getAllProducts);
@@ -18,7 +18,7 @@ router.get('/:id', productController.getProductById);
 
 
 // update product
-router.put('/update/:id', productController.updateProduct);
+router.put('/update/:id', uploader.single('image'), productController.updateProduct);
 
 
 //delete product
