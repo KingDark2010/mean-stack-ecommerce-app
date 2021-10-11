@@ -3,39 +3,40 @@
   <div class="card">
     <h5 class="card-header">List of Products</h5>
     <div class="card-body">
-      <a routerLink="/products/form" class="btn btn-success">New</a>
+      <a routerLink="/products/form" class="btn btn-success my-3">New</a>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Image</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Category</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of Products">
+          <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.seller.firstName}}</td>
+            <td><img src="../../../assets/public/single/{{productImage(item.image)}}" width="100"> </td>
+            <td>{{item.price}}</td>
+            <td>{{item.countInStock}}</td>
+            <td> {{item.category.name}}</td>
+            <td>{{item.created_at | date}}</td>
+            <td>{{item.updated_at | date}}</td>
+            <td>
+              <a routerLink="/products/form/{{item._id}}" type="button" class="btn btn-outline-primary mx-3"><i
+                  class="bi bi-pencil-square"></i></a>
+              <button (click)="productDelete(item._id)" type="button" class="btn btn-outline-danger"
+                data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-trash-fill"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="card">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Seller</th>
-          <th scope="col">Image</th>
-          <th scope="col">Price</th>
-          <th scope="col">Stock</th>
-          <th scope="col">Category</th>
-          <th scope="col">Created At</th>
-          <th scope="col">Updated At</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let item of Products">
-        <tr>
-          <td>{{item.name}}</td>
-          <td>{{item.seller.firstName}}</td>
-          <td><img src="../../../assets/public/single/{{productImage(item.image)}}" width="100"> </td>
-          <td>{{item.price}}</td>
-          <td>{{item.countInStock}}</td>
-          <td> {{item.category.name}}</td>
-          <td>{{item.created_at | date}}</td>
-          <td>{{item.updated_at | date}}</td>
-          <td>
-            <a routerLink="/products/form/{{item._id}}" type="button" class="btn btn-outline-primary mx-3"><i class="bi bi-pencil-square"></i></a>
-            <button (click)="productDelete(item._id)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-trash-fill"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+</div>

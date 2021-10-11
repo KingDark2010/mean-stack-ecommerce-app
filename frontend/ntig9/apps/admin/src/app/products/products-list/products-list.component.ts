@@ -36,7 +36,7 @@ export class ProductsListComponent implements OnInit {
   productDelete(productID:string | undefined):void {
     this.productService.deleteProduct(productID).subscribe(() => {
       this.Products = this.Products.filter(product => product._id !== productID);
-      this.toastr.success('Success', 'Category Deleted', {
+      this.toastr.success('Success', 'Product Deleted', {
         timeOut: 3000,
       });
     },

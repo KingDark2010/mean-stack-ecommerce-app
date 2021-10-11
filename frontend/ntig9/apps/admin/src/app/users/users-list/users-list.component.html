@@ -1,1 +1,42 @@
-<p>users-list works!</p>
+<div class="admin-category">
+  <h1 class="h1">Users</h1>
+  <div class="card">
+    <h5 class="card-header">List of Users</h5>
+    <div class="card-body">
+      <a routerLink="/users/form" class="btn btn-success my-3">New</a>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Admin</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let user of Users">
+          <tr>
+            <td>{{user.firstName}} {{user.lastName}}</td>
+            <td>{{user.email}}</td>
+            <td *ngIf="user.isAdmin; then ifAdmin else notAdmin"></td>
+            <td>{{user.createdAt | date}}</td>
+            <td>{{user.updatedAt | date}}</td>
+            <td>
+              <a routerLink="/users/form/{{user._id}}" type="button" class="btn btn-outline-primary mx-3"><i class="bi bi-pencil-square"></i></a>
+              <button (click)="userDelete(user._id)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-trash-fill"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #ifAdmin>
+  <td><i class="bi bi-check-circle-fill fs-2" style="color: green;"></i></td>
+</ng-template>
+
+<ng-template #notAdmin>
+  <td><i class="bi bi-x-circle-fill fs-2" style="color: red;"></i></td>
+</ng-template>

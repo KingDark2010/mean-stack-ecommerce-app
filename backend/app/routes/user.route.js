@@ -19,7 +19,7 @@ router.get('/all', userController.getAllUsers);
 router.get('/:id', userController.getUserById);
 
 // update user route
-router.patch('/update/:id', userController.updateUser);
+router.put('/update/:id', userController.updateUser);
 
 // delete user route
 router.delete('/delete/:id', userController.deleteUser);

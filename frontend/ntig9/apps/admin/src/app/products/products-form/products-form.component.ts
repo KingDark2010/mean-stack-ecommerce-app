@@ -21,7 +21,7 @@ export class ProductsFormComponent implements OnInit {
   users: User[] = [];
 
   get title() {
-    return this.editMode ? 'Edit Category' : 'Add Category';
+    return this.editMode ? 'Edit Product' : 'Add Product';
   }
 
   get btn() {
@@ -64,11 +64,11 @@ export class ProductsFormComponent implements OnInit {
 
   editCancel() {
     if(this.editMode) {
-      this.toastr.warning('Editing Category Canceled', 'Warning');
+      this.toastr.warning('Editing Product Canceled', 'Warning');
       this.location.back();
     }
     else {
-      this.toastr.warning('Adding Category Canceled', 'Warning');
+      this.toastr.warning('Adding Product Canceled', 'Warning');
       this.location.back();
     }
   }
@@ -96,7 +96,7 @@ export class ProductsFormComponent implements OnInit {
             productFormData.append(key, this.productForm.value[key]);
           }
           this._productsServices.updateProduct(params.id, productFormData).subscribe(() => {
-            this.toastr.success('Category updated successfully');
+            this.toastr.success('Product updated successfully');
             this.location.back();
           });
         });
@@ -108,19 +108,19 @@ export class ProductsFormComponent implements OnInit {
         this._productsServices.createProduct(productFormData)
           .subscribe(
             ()=> {
-              this.toastr.success('Success', 'Category Added', {
+              this.toastr.success('Success', 'Product Added', {
                 timeOut: 3000,
               });
               this.location.back();
             },
             error => {
               if(error.error.message.includes('duplicate key erro')) {
-                this.toastr.error(`Error Category already exists`, 'Category Error', {
+                this.toastr.error(`Error Product already exists`, 'Product Error', {
                   timeOut: 3000,
                 });
               }
               else {
-                this.toastr.error('Error', 'Category Error', {
+                this.toastr.error('Error', 'Product Error', {
                   timeOut: 3000,
                 });
               }

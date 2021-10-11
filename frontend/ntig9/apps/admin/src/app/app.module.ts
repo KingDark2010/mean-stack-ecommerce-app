@@ -17,6 +17,8 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 import { ProductsFormComponent } from './products/products-form/products-form.component';
 import { UsersFormComponent } from './users/users-form/users-form.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
+import { OrdersListComponent } from './orders/orders-list/orders-list.component';
+import { OrdersDetailsComponent } from './orders/orders-details/orders-details.component';
 
 const routes: Routes = [
   {
@@ -62,12 +64,21 @@ const routes: Routes = [
       {
         path: 'users/form/:id',
         component: UsersFormComponent
+      },
+      {
+        path: 'orders',
+        component: OrdersListComponent
+      },
+      {
+        path: 'orders/details/:id',
+        component: OrdersDetailsComponent
       }
+
     ]
   }];
 
 @NgModule({
-    declarations: [AppComponent, DashboardcontentComponent, SidebarComponent, DashboredComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent],
+    declarations: [AppComponent, DashboardcontentComponent, SidebarComponent, DashboredComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent, OrdersListComponent, OrdersDetailsComponent],
     imports: [
         BrowserModule,
         RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
