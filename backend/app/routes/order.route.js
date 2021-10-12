@@ -5,11 +5,25 @@ const Order = require('../db/models/order.model');
 const OrderItem = require('../db/models/orderItem.model');
 const User = require('../db/models/user.model');
 const responseCreator = require('../helpers/response.helper')
+const Product = require('../db/models/product.model');
 
 // get all orders
 router.get('/', async (req, res) => {
     try {
-        const orders = await Order.find({}).populate('user', 'name email');
+        // populate the order with the user firstName lastName email and orderItems's product with product name
+        const orders = await Order.find().populate({
+            path: 'orderItems',
+            populate: {
+                path: 'product',
+                select: 'name price category brand',
+                populate: {
+                    path: 'category',
+                    select: 'name'
+                }
+            
+        }}).populate('user', 'firstName lastName email');
+
+        //const orders = await Order.find({}).populate('user', 'firstName lastName email').populate('orderItems', 'product quantity').populate('product', 'name price');
         if(!orders){
             return res.status(404).send(responseCreator(404, null, 'No orders found'));
         }
@@ -22,8 +36,14 @@ router.get('/', async (req, res) => {
 // post new order
 router.post('/add', async (req, res) => {
     try {
-        //add orderItem to order
+        const product = await Product.findById(req.body.orderItems.product);
+        if(!product){
+            return res.status(404).send(responseCreator(404, null, 'Product not found'));
+        }
         const user = await User.findById(req.body.user);
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'User not found'));
+        }
         const orderItemsId = Promise.all(req.body.orderItems.map(async item => {
             let newItem = new OrderItem({
                 quantity: item.quantity,
@@ -43,6 +63,9 @@ router.post('/add', async (req, res) => {
         order.orderItems = orderPromiseResult;
         order.user = user._id;
         order.totalPrice = totalPriceResult.reduce((a, b) => a + b, 0);
+        // reduce the product countInStock by the quantity
+        product.countInStock -= req.body.orderItems.quantity;
+        await product.save();
         await order.save();
         res.status(201).send(responseCreator(201, order, 'Order created'));
     } catch (error) {
@@ -53,7 +76,17 @@ router.post('/add', async (req, res) => {
 // get order by id
 router.get('/:id', async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id).populate('user', 'name email');
+        const order = await Order.findById(req.params.id).populate({
+            path: 'orderItems',
+            populate: {
+                path: 'product',
+                select: 'name price category brand',
+                populate: {
+                    path: 'category',
+                    select: 'name'
+                }
+            
+        }}).populate('user', 'firstName lastName email');
         if(!order){
             return res.status(404).send(responseCreator(404, null, 'No order found'));
         }

@@ -1,0 +1,17 @@
+.category{
+  margin-right: 10vw;
+}
+
+.category .btn-warning {
+  float: right;
+}
+
+#color-id {
+  width: 3%;
+  /* make it rounded */
+  border-radius: 100px;
+  /* make pointer hand */
+  cursor: pointer;
+  /* make text color fully translarent */
+  color: rgba(0, 0, 0, 0);
+}

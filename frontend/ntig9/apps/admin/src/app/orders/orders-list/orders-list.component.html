@@ -21,12 +21,21 @@
             <td>{{ order._id }}</td>
             <td>{{ order.user.email }}</td>
             <td>{{ order.shippingCountry }}</td>
-            <td>{{ order.shipmentStatus }}</td>
-            <td>{{ order.paymentStatus }}</td>
-            <td>{{ order.totalPrice }}</td>
+            <td ngSwitch="{{order.shipmentStatus}}">
+              <span *ngSwitchCase="'Pending'" class="badge bg-primary text-white">{{order.shipmentStatus}}</span>
+              <span *ngSwitchCase="'Shipped'" class="badge bg-info text-dark">{{order.shipmentStatus}}</span>
+              <span *ngSwitchCase="'Delivered'" class="badge bg-success text-white">{{order.shipmentStatus}}</span>
+              <span *ngSwitchCase="'Cancelled'" class="badge bg-danger text-white">{{order.shipmentStatus}}</span>
+            </td>
+            <td ngSwitch="{{ order.paymentStatus }}">
+              <span *ngSwitchCase="'Pending'" class="badge bg-primary text-white">{{ order.paymentStatus }}</span>
+              <span *ngSwitchCase="'Paid'" class="badge bg-success text-white">{{ order.paymentStatus }}</span>
+              <span *ngSwitchCase="'Cancelled'" class="badge bg-danger text-white">{{ order.paymentStatus }}</span>
+            </td>
+            <td>{{ order.totalPrice | currency}}</td>
             <td>{{ order.dateOfOrder | date }}</td>
             <td>
-              <a routerLink="/orders/form/{{order._id}}" type="button" class="btn btn-outline-secondary mx-3 "><i class="bi bi-search"></i></a>
+              <a routerLink="/orders/details/{{order._id}}" type="button" class="btn btn-outline-secondary mx-3 "><i class="bi bi-eye"></i></a>
               <button (click)="deleteOrder(order._id)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-trash-fill"></i></button>
             </td>
           </tr>
