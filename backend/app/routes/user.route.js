@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const userController = require('../controllers/user.controller');
-
+const auth = require('../middleware/auth');
 
 router.post('/register', userController.registerUser);
 
@@ -13,7 +13,7 @@ router.post('/reactivate', userController.reactivateUser);
 router.post('/login',userController.userLogin);
 
 // get all users route
-router.get('/all', userController.getAllUsers);
+router.get('/all', auth.AuthAdmin, userController.getAllUsers);
 
 // get user by id route
 router.get('/:id', userController.getUserById);
@@ -23,6 +23,11 @@ router.put('/update/:id', userController.updateUser);
 
 // delete user route
 router.delete('/delete/:id', userController.deleteUser);
+
+// logout user
+router.post('/logout', userController.userLogout);
+
+//
 
 // deactivate user route for future use
 /* router.patch('/deactivate/:id', async (req, res) => {

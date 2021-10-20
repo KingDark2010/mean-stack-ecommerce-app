@@ -1,15 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UsersService } from '@ntig9/products';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
-  constructor() { }
+  private ngUnsubscribe = new Subject();
+  token = localStorage.getItem('AuthToken');
+  constructor(private usersServices: UsersService, private router: Router) { }
 
-  ngOnInit(): void {
+  logoutUser() {
+    this.usersServices.logout(this.token).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      data => {
+        console.log(data);
+        localStorage.removeItem('AuthToken');
+        this.router.navigate(['/login']);
+      }
+    );
   }
 
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Category, CategoriesService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-categories-list',
@@ -9,16 +11,17 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoriesListComponent implements OnInit {
 
+  private ngUnsubscribe = new Subject();
   categories:Category[] = [];
 
   constructor(private categoriesService: CategoriesService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.categoriesService.getCategories().subscribe(categories => this.categories = categories.data);
+    this.categoriesService.getCategories().pipe(takeUntil(this.ngUnsubscribe)).subscribe(categories => this.categories = categories.data);
   }
 
   deleteCategory(categoryID:string | undefined):void {
-    this.categoriesService.deleteCategory(categoryID).subscribe(() => {
+    this.categoriesService.deleteCategory(categoryID).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
       this.categories = this.categories.filter(category => category._id !== categoryID);
       this.toastr.success('Success', 'Category Deleted', {
         timeOut: 3000,
@@ -30,5 +33,11 @@ export class CategoriesListComponent implements OnInit {
     this.toastr.info('Item Deletion was Canceled', 'Cancel', {
       timeOut: 3000,
     });
+  }
+
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

@@ -78,6 +78,25 @@ const userLogin =  async (req, res) => {
     }
 }
 
+const userLogout = async (req, res) => {
+    try{
+        //find user by token inside array of tokens
+        const user = await User.findOne({'tokens.token': req.body.token});
+        console.log(user);
+        if(!user){
+            return res.status(404).send(responseCreator(404, null, 'user not found'));
+        }
+        if(user){
+            user.tokens = user.tokens.filter(token => token.token !== req.body.token);
+            await user.save();
+            return res.status(200).send(responseCreator(200, null, 'user logged out successfully'));
+        }
+    }
+    catch(err){
+        res.status(500).send(responseCreator(500, null, err.message));
+    }
+}
+
 
 const getAllUsers = async (req, res) => {
     try{
@@ -142,4 +161,4 @@ const deleteUser = async (req, res) => {
 
 //export module
 
-module.exports = {registerUser, activateUser, reactivateUser, userLogin, getAllUsers, getUserById, updateUser, deleteUser};
+module.exports = {registerUser, activateUser, reactivateUser, userLogin, getAllUsers, getUserById, updateUser, deleteUser, userLogout};

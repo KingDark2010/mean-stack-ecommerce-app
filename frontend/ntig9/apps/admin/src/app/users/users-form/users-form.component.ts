@@ -2,8 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CategoriesService, UsersService } from '@ntig9/products';
+import {  UsersService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -13,8 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UsersFormComponent implements OnInit {
 
-
-
+  private ngUnsubscribe = new Subject();
   editMode = false;
 
 
@@ -69,15 +70,15 @@ export class UsersFormComponent implements OnInit {
     console.log(this.categoryForm.value);
     if (this.categoryForm.valid) {
       if (this.editMode) {
-        this.route.params.subscribe(params => {
-          this._usersService.updateUser(params.id, this.categoryForm.value).subscribe(() => {
+        this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
+          this._usersService.updateUser(params.id, this.categoryForm.value).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
             this.toastr.success('User updated successfully');
             this.location.back();
           });
         });
       } else {
         this._usersService.createUser(this.categoryForm.value)
-          .subscribe(
+          .pipe(takeUntil(this.ngUnsubscribe)).subscribe(
             ()=> {
               this.toastr.success('Success', 'User Added', {
                 timeOut: 3000,
@@ -102,11 +103,11 @@ export class UsersFormComponent implements OnInit {
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe(params => {
+    this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
 
       if (params.id) {
         this.editMode = true;
-        this._usersService.getUser(params.id).subscribe(user => {
+        this._usersService.getUser(params.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(user => {
           this.categoryForm.setValue({
             firstName: user.data.firstName,
             lastName: user.data.lastName,
@@ -121,5 +122,9 @@ export class UsersFormComponent implements OnInit {
       }
     });
   }
-
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

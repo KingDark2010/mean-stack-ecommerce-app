@@ -8,10 +8,10 @@ const auth = require('../middleware/auth');
 const uploader = require('../middleware/uploader');
 
 // add product
-router.post('/add', uploader.single('image'), productController.addProduct);
+router.post('/add', auth.AuthAdmin, uploader.single('image'), productController.addProduct);
 
 // get all products
-router.get('/', productController.getAllProducts);
+router.get('/', auth.AuthAdmin, productController.getAllProducts);
 
 // get product by id
 router.get('/:id', productController.getProductById);

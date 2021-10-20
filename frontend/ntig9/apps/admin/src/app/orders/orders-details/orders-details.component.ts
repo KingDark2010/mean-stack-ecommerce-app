@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { OrderItems, OrdersService } from '@ntig9/orders';
 import {  User } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-orders-details',
@@ -13,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class OrdersDetailsComponent implements OnInit {
 
+  private ngUnsubscribe = new Subject();
   orderItems: OrderItems[] = [];
   user: User = {} as User;
 
@@ -47,8 +50,8 @@ export class OrdersDetailsComponent implements OnInit {
     this.isSubmitted = true;
     console.log(this.orderForm.value);
     if (this.orderForm.valid) {
-        this.route.params.subscribe(params => {
-          this._orderServices.updateOrder(params.id, this.orderForm.value).subscribe(() => {
+        this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
+          this._orderServices.updateOrder(params.id, this.orderForm.value).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
             this.toastr.success('Category updated successfully');
             this.location.back();
           });
@@ -57,9 +60,9 @@ export class OrdersDetailsComponent implements OnInit {
   }
 
   private _checkOrder() {
-    this.route.params.subscribe(params => {
+    this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
       if (params.id) {
-        this._orderServices.getOrder(params.id).subscribe(order => {
+        this._orderServices.getOrder(params.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(order => {
           this.orderForm.setValue({
             shipmentStatus: order.data.shipmentStatus,
           });
@@ -74,6 +77,11 @@ export class OrdersDetailsComponent implements OnInit {
         });
       }
     });
+  }
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
 

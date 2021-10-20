@@ -6,9 +6,10 @@ const OrderItem = require('../db/models/orderItem.model');
 const User = require('../db/models/user.model');
 const responseCreator = require('../helpers/response.helper')
 const Product = require('../db/models/product.model');
+const auth = require('../middleware/auth');
 
 // get all orders
-router.get('/', async (req, res) => {
+router.get('/', auth.AuthAdmin, async (req, res) => {
     try {
         // populate the order with the user firstName lastName email and orderItems's product with product name
         const orders = await Order.find().populate({

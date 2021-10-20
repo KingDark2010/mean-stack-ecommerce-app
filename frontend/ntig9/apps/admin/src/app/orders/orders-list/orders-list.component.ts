@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Order, OrdersService } from '@ntig9/orders';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-orders-list',
@@ -9,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class OrdersListComponent implements OnInit {
 
+  private ngUnsubscribe = new Subject();
 
   Orders: Order[] = [];
 
@@ -28,12 +31,12 @@ export class OrdersListComponent implements OnInit {
   }
 
   private _getOrders() {
-    this._orderServices.getOrders().subscribe(Orders => {
+    this._orderServices.getOrders().pipe(takeUntil(this.ngUnsubscribe)).subscribe(Orders => {
       this.Orders = Orders.data;
     });
   }
   deleteOrder(orderID:string | undefined):void {
-    this._orderServices.deleteOrder(orderID).subscribe(() => {
+    this._orderServices.deleteOrder(orderID).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
       this.Orders = this.Orders.filter(order => order._id !== orderID);
       this.toastr.success('Success', 'User Deleted', {
         timeOut: 3000,
@@ -45,6 +48,12 @@ export class OrdersListComponent implements OnInit {
     this.toastr.info('Item Deletion was Canceled', 'Cancel', {
       timeOut: 3000,
     });
+  }
+
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
 }

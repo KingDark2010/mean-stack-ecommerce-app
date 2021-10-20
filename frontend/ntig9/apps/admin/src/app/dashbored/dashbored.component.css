@@ -1,0 +1,33 @@
+
+.orders-card {
+  background-color: #4158D0;
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+}
+
+.customers-card {
+  background-color: #FFCC70;
+  background-image: linear-gradient(43deg, #FFCC70 0%, #4158D0 46%, #C850C0 100%);
+}
+
+.products-card {
+  background-color: #C850C0;
+  background-image: linear-gradient(43deg, #C850C0 0%, #4158D0 46%, #FFCC70 100%);
+}
+
+.earnings-card {
+  background-color: #4158D0;
+  background-image: linear-gradient(43deg, #4158D0 0%, #FFCC70 46%, #C850C0 100%);
+}
+
+
+.admin-category {
+  margin-right: 10vw;
+}
+
+.admin-category h1{
+  margin-bottom: 4vh;
+}
+
+.card {
+  margin-top: 4vh;
+}

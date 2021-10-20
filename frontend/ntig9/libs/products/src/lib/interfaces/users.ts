@@ -5,6 +5,7 @@ export interface User {
   email: string;
   password: string;
   phone: string;
+  token: string;
   isAdmin: boolean;
   isSeller: boolean;
   isActive: boolean;

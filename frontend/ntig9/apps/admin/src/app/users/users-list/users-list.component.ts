@@ -3,6 +3,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User, UsersService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-users-list',
@@ -10,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-
+  private ngUnsubscribe = new Subject();
 
   Users: User[] = [];
 
@@ -30,12 +32,12 @@ export class UsersListComponent implements OnInit {
   }
 
   private _getUsers() {
-    this.userService.getUsers().subscribe(Users => {
+    this.userService.getUsers().pipe(takeUntil(this.ngUnsubscribe)).subscribe(Users => {
       this.Users = Users.data;
     });
   }
   userDelete(userID:string | undefined):void {
-    this.userService.deleteUser(userID).subscribe(() => {
+    this.userService.deleteUser(userID).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
       this.Users = this.Users.filter(user => user._id !== userID);
       this.toastr.success('Success', 'User Deleted', {
         timeOut: 3000,
@@ -48,5 +50,9 @@ export class UsersListComponent implements OnInit {
       timeOut: 3000,
     });
   }
-
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

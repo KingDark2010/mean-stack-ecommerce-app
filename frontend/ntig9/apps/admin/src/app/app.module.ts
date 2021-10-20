@@ -7,7 +7,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { DashboredComponent } from './dashbored/dashbored.component';
 import { DashboardcontentComponent } from './shared/dashboardcontent/dashboardcontent.component';
 import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
@@ -19,11 +19,13 @@ import { UsersFormComponent } from './users/users-form/users-form.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { OrdersListComponent } from './orders/orders-list/orders-list.component';
 import { OrdersDetailsComponent } from './orders/orders-details/orders-details.component';
+import { AdminGuard, JwtInterceptor, UsersModule } from '@ntig9/users';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardcontentComponent,
+    canActivate: [AdminGuard],
     children: [
       {
         path: 'dashbored',
@@ -87,9 +89,12 @@ const routes: Routes = [
         ReactiveFormsModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot(),
-        ColorPickerModule
+        ColorPickerModule,
+        UsersModule,
     ],
-    providers: [],
+    providers: [
+      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

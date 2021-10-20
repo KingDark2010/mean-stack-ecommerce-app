@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-categories-form',
@@ -12,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoriesFormComponent implements OnInit {
 
-
+  private ngUnsubscribe = new Subject();
   editMode = false;
 
 
@@ -62,15 +64,15 @@ export class CategoriesFormComponent implements OnInit {
     console.log(this.categoryForm.value);
     if (this.categoryForm.valid) {
       if (this.editMode) {
-        this.route.params.subscribe(params => {
-          this._categoriesService.updateCategory(params.id, this.categoryForm.value).subscribe(() => {
+        this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
+          this._categoriesService.updateCategory(params.id, this.categoryForm.value).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
             this.toastr.success('Category updated successfully');
             this.location.back();
           });
         });
       } else {
         this._categoriesService.createCategory(this.categoryForm.value)
-          .subscribe(
+          .pipe(takeUntil(this.ngUnsubscribe)).subscribe(
             ()=> {
               this.toastr.success('Success', 'Category Added', {
                 timeOut: 3000,
@@ -95,11 +97,11 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe(params => {
+    this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
 
       if (params.id) {
         this.editMode = true;
-        this._categoriesService.getCategory(params.id).subscribe(category => {
+        this._categoriesService.getCategory(params.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(category => {
           this.categoryForm.setValue({
             name: category.data.name,
             icon: category.data.icon,
@@ -110,6 +112,10 @@ export class CategoriesFormComponent implements OnInit {
       }
     });
   }
-
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
 }

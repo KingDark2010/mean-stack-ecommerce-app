@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService, Category, ProductsService, User, UsersService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -15,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProductsFormComponent implements OnInit {
 
+  private ngUnsubscribe = new Subject();
 
   categories:Category[] = [];
   editMode = false;
@@ -39,8 +42,8 @@ export class ProductsFormComponent implements OnInit {
   constructor(private _fb: FormBuilder, private _categoriesService: CategoriesService, private toastr: ToastrService, private location: Location, private route:ActivatedRoute, private _productsServices: ProductsService, private _usersServices: UsersService) { }
 
   ngOnInit(): void {
-    this._categoriesService.getCategories().subscribe(categories => this.categories = categories.data);
-    this._usersServices.getUsers().subscribe(users => {
+    this._categoriesService.getCategories().pipe(takeUntil(this.ngUnsubscribe)).subscribe(categories => this.categories = categories.data);
+    this._usersServices.getUsers().pipe(takeUntil(this.ngUnsubscribe)).subscribe(users => {
       users.data.forEach(user => {
         if(user.isSeller) {
           this.users.push(user);
@@ -90,12 +93,12 @@ export class ProductsFormComponent implements OnInit {
 
     if (this.productForm.valid) {
       if (this.editMode) {
-        this.route.params.subscribe(params => {
+        this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
           const productFormData = new FormData();
           for(const key in this.productForm.value) {
             productFormData.append(key, this.productForm.value[key]);
           }
-          this._productsServices.updateProduct(params.id, productFormData).subscribe(() => {
+          this._productsServices.updateProduct(params.id, productFormData).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
             this.toastr.success('Product updated successfully');
             this.location.back();
           });
@@ -106,7 +109,7 @@ export class ProductsFormComponent implements OnInit {
           productFormData.append(key, this.productForm.value[key]);
         }
         this._productsServices.createProduct(productFormData)
-          .subscribe(
+          .pipe(takeUntil(this.ngUnsubscribe)).subscribe(
             ()=> {
               this.toastr.success('Success', 'Product Added', {
                 timeOut: 3000,
@@ -131,11 +134,11 @@ export class ProductsFormComponent implements OnInit {
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe(params => {
+    this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
 
       if (params.id) {
         this.editMode = true;
-        this._productsServices.getProduct(params.id).subscribe(product => {
+        this._productsServices.getProduct(params.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(product => {
           this.productForm.setValue({
             name: product.data.name,
             brand: product.data.brand,
@@ -154,5 +157,9 @@ export class ProductsFormComponent implements OnInit {
     });
   }
 
-
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

@@ -2,6 +2,7 @@
 const router = require('express').Router();
 //require category model
 const categoryController = require('../controllers/category.controller');
+const auth = require('../middleware/auth');
 // add category
 router.post('/add', categoryController.addCategory);
 
@@ -9,7 +10,7 @@ router.post('/add', categoryController.addCategory);
 router.delete('/delete/:id', categoryController.deleteCategory);
 
 // get all categories
-router.get('/', categoryController.getAllCategories);
+router.get('/', auth.AuthAdmin ,categoryController.getAllCategories);
 
 
 // get single category

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Product, User } from "@ntig9/products";
 
 export interface Order {

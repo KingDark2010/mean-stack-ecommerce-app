@@ -3,6 +3,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Product, ProductsService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-products-list',
@@ -11,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProductsListComponent implements OnInit {
 
+  private ngUnsubscribe = new Subject();
   Products: Product[] = [];
 
   deleteProduct(id:string) {
@@ -29,12 +32,12 @@ export class ProductsListComponent implements OnInit {
   }
 
   private _getProducts() {
-    this.productService.getProducts().subscribe(products => {
+    this.productService.getProducts().pipe(takeUntil(this.ngUnsubscribe)).subscribe(products => {
       this.Products = products.data;
     });
   }
   productDelete(productID:string | undefined):void {
-    this.productService.deleteProduct(productID).subscribe(() => {
+    this.productService.deleteProduct(productID).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
       this.Products = this.Products.filter(product => product._id !== productID);
       this.toastr.success('Success', 'Product Deleted', {
         timeOut: 3000,
@@ -46,5 +49,10 @@ export class ProductsListComponent implements OnInit {
     this.toastr.info('Item Deletion was Canceled', 'Cancel', {
       timeOut: 3000,
     });
+  }
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
