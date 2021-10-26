@@ -10,7 +10,7 @@ router.post('/add', categoryController.addCategory);
 router.delete('/delete/:id', categoryController.deleteCategory);
 
 // get all categories
-router.get('/', auth.AuthAdmin ,categoryController.getAllCategories);
+router.get('/' ,categoryController.getAllCategories);
 
 
 // get single category

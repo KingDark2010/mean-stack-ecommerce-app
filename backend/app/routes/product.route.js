@@ -7,15 +7,20 @@ const auth = require('../middleware/auth');
 // require uploader middleware
 const uploader = require('../middleware/uploader');
 
+
+
 // add product
 router.post('/add', auth.AuthAdmin, uploader.single('image'), productController.addProduct);
 
 // get all products
-router.get('/', auth.AuthAdmin, productController.getAllProducts);
+router.get('/', productController.getAllProducts);
 
-// get product by id
-router.get('/:id', productController.getProductById);
+//count products
+router.get('/count', productController.countProducts);
 
+
+//get Featured products
+router.get('/featured', productController.getFeaturedProducts);
 
 // update product
 router.put('/update/:id', uploader.single('image'), productController.updateProduct);
@@ -24,13 +29,14 @@ router.put('/update/:id', uploader.single('image'), productController.updateProd
 //delete product
 router.delete('/delete/:id', productController.deleteProduct);
 
-//count products
-router.get('/count', productController.countProducts);
 
-//get Featured products
-router.get('/featured', productController.getFeaturedProducts);
+
 //get discounted products
 router.get('/discounted', productController.getDiscountedProducts);
+
+// get product by id
+router.get('/:id', productController.getProductById);
+
 
 //add upload galary route
 router.post('/upload/:id', auth.AuthSeller, uploader.array('images', 5), productController.uploadImages);

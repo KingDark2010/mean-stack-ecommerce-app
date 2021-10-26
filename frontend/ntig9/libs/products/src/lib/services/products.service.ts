@@ -29,4 +29,7 @@ export class ProductsService {
   getProduct(productID: string | undefined): Observable<ProductObject> {
     return this._http.get<ProductObject>(`${this.URL}product/${productID}`);
   }
+  getFeaturedProducts(): Observable<ProductsObject> {
+    return this._http.get<ProductsObject>(`${this.URL}product/featured`);
+  }
 }

@@ -11,9 +11,9 @@ export class DashboardcontentComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
+    if(this.router.url == '/'){
       this.router.navigate(['/dashbored']);
-  },1);
+    }
   }
 
 }

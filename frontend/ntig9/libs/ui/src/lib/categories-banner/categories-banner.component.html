@@ -1,0 +1,27 @@
+<div>
+  <h4 class="h4 my-4">
+    Categories
+  </h4>
+  <div class="row" *ngIf="categories.length === 0;else categoriesContent">
+    <div class="col-12">
+      <p class="text-center h5">
+        Categories are been loading... refresh the page to see the categories.
+      </p>
+    </div>
+  </div>
+</div>
+
+<ng-template #categoriesContent>
+  <div class="row">
+    <div class="col-2"  *ngFor="let Category of categories">
+      <a class="nav-link active" routerLink="/categoryproducts/{{Category.name}}" routerLinkActive="router-link-active" style="color: black;">
+        <div class="card" [style.background-color]="Category.color">
+          <div class="card-body align-self-center">
+            <h5 class="card-title"><i class="{{Category.icon}} fs-1"  style="margin-left: 0.6vw; color: black;"></i></h5>
+            <p class="card-text" style="color: black;">{{Category.name}}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-template>

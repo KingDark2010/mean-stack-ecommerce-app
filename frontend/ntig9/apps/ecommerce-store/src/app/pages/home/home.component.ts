@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ntig9-home',
+  selector: 'ecommerce-store-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

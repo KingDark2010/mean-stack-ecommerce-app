@@ -1,0 +1,41 @@
+<div class="row" *ngIf="products.length === 0;else categoriesContent">
+  <div class="col-9">
+    <p class="text-center h5">
+      Products are been Added... Please visit again later
+    </p>
+  </div>
+</div>
+
+<ng-template #categoriesContent>
+  <div class="row" *ngIf="productPage;else home">
+    <div class="col-3 product-page"  *ngFor="let Product of products"  style="margin-bottom: 5vh;">
+      <a class="nav-link active" routerLink="/" routerLinkActive="router-link-active" style="color: black;">
+        <div class="card" style="background-color: rgba(185, 195, 221, 0.1);">
+          <div class="card-body align-self-center" >
+            <img class="product-img  align-self-center " src="http://localhost:4200/assets/public/single/{{productImage(Product.image)}}" alt="">
+            <h5 class="card-title my-2">{{Product.name}}</h5>
+            <p class="card-text" style="color: black;">{{Product.price | currency}}</p>
+            <button type="button" class="btn btn-primary">Add to Cart</button>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #home>
+  <div class="row"  style="margin-bottom: 5vh;">
+    <div class="col-3"  *ngFor="let Product of products">
+      <a class="nav-link active" routerLink="/product/{{Product._id}}" routerLinkActive="router-link-active" style="color: black;">
+        <div class="card" style="background-color: rgba(185, 195, 221, 0.1);">
+          <div class="card-body align-self-center" >
+            <img class="product-img  align-self-center " src="http://localhost:4200/assets/public/single/{{productImage(Product.image)}}" alt="">
+            <h5 class="card-title my-2">{{Product.name}}</h5>
+            <p class="card-text" style="color: black;">{{Product.price | currency}}</p>
+            <button type="button" class="btn btn-primary">Add to Cart</button>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-template>

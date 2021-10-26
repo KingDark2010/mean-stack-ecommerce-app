@@ -15,9 +15,6 @@ router.post('/login',userController.userLogin);
 // get all users route
 router.get('/all', auth.AuthAdmin, userController.getAllUsers);
 
-// get user by id route
-router.get('/:id', userController.getUserById);
-
 // update user route
 router.put('/update/:id', userController.updateUser);
 
@@ -26,6 +23,9 @@ router.delete('/delete/:id', userController.deleteUser);
 
 // logout user
 router.post('/logout', userController.userLogout);
+
+// get user by id route
+router.get('/:id', userController.getUserById);
 
 //
 

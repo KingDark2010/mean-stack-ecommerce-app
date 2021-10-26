@@ -28,3 +28,12 @@ export interface OrderItems {
   quantity: number;
   product: Product;
 }
+
+export interface cartItem {
+  productID: string;
+  quantity: number;
+}
+
+export interface cartItemObject {
+  data: cartItem[];
+}

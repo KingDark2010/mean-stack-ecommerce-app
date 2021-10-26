@@ -1,37 +1,45 @@
-<p>navbar works!</p>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand logo col-3" routerLink="/" routerLinkActive="router-link-active"> <img src="/assets/Webp.net-resizeimage.png" alt="" style="width: 90px;"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse col-9" id="navbarSupportedContent">
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 20vw; margin-left: -8vw;">
+        <button class="btn btn-outline-success" type="submit" style="margin-right: 7vw;">Search</button>
+      </form>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="home" routerLink="/" routerLinkActive="router-link-active">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+          <a class="nav-link active" aria-current="products" routerLink="/products" routerLinkActive="router-link-active">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          <a class="nav-link active" aria-current="contact" routerLink="/contact" routerLinkActive="router-link-active">Contact</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="cart" routerLink="/cart" routerLinkActive="router-link-active">
+            <button type="button" class="badge bg-light text-dark position-relative" style="border: none;">
+              <i class="bi bi-cart fs-2" aria-hidden="true"></i>
+              <span *ngIf="cartdata.length > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 1em;">
+                {{cartdata.length}}
+              </span>
+            </button>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="login" routerLink="/login" routerLinkActive="router-link-active">
+
+            <i class="bi bi-person fs-2" aria-hidden="true"></i>
+            <span class="">Ahmed</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
+

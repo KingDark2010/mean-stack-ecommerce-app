@@ -113,7 +113,8 @@ const countProducts = async (req, res) => {
 
 const getFeaturedProducts = async (req, res) => {
     try {
-        const products = await Product.find({featured: true}).populate('category').populate('seller');
+        const products = await Product.find({isFeatured: true}).populate('category').populate('seller');
+        console.log(products);
         if(!products) {
             return res.status(404).send(responseCreator(404, null, 'No products found'));
         }

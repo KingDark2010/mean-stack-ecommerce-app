@@ -34,6 +34,19 @@ router.get('/', auth.AuthAdmin, async (req, res) => {
     }
 });
 
+//count all orders
+router.get('/count', auth.AuthAdmin, async (req, res) => {
+    try {
+        const count = await Order.countDocuments();
+        if(!count){
+            return res.status(404).send(responseCreator(404, null, 'No orders found'));
+        }
+        return res.status(200).send(responseCreator(200, count, 'Orders found'));
+    } catch (error) {
+        return res.status(500).send(responseCreator(500, null, error.message));
+    }
+});
+
 // post new order
 router.post('/add', async (req, res) => {
     try {
