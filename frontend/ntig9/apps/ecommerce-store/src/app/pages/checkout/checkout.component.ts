@@ -3,15 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartServiceService } from '@ntig9/orders';
 import { OrderProduct, ProductsService } from '@ntig9/products';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms'
 
 @Component({
-
-  selector: 'ecommerce-store-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  selector: 'ecommerce-store-checkout',
+  templateUrl: './checkout.component.html',
+  styleUrls: ['./checkout.component.css']
 })
-export class CartComponent implements OnInit {
+export class CheckoutComponent implements OnInit {
 
+  orderForm!: FormGroup;
   cartProducts: OrderProduct[] = [];
   singleproduct:OrderProduct = {} as OrderProduct;
 
@@ -19,9 +20,19 @@ export class CartComponent implements OnInit {
     const newData = image.split('\\')
     return newData[newData.length -1]
   }
-  constructor(private productServices: ProductsService, private cartToken: CartServiceService, private location: Location, private router:Router) { }
+  constructor(private productServices: ProductsService, private cartToken: CartServiceService, private location: Location, private router:Router, private fb:FormBuilder) { }
 
   ngOnInit(): void {
+    this.orderForm = this.fb.group({
+      shippingAddress1: [''],
+      shippingAddress2: [''],
+      shippingCity: [''],
+      shippingZip: [''],
+      shippingCountry: [''],
+      shippingPhone: [''],
+      user: [''],
+      orderItems: [''],
+    });
     this.cartToken.cart$.pipe().subscribe(cart => {
       cart.forEach(item => {
         console.log(item.productID);
@@ -55,4 +66,5 @@ export class CartComponent implements OnInit {
   checkout() {
     this.router.navigate(['/checkout']);
   }
+
 }

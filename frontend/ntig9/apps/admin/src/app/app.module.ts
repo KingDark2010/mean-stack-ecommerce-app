@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -21,9 +21,13 @@ import { OrdersListComponent } from './orders/orders-list/orders-list.component'
 import { OrdersDetailsComponent } from './orders/orders-details/orders-details.component';
 import { AdminGuard, JwtInterceptor, UsersModule } from '@ntig9/users';
 
+const providers =  [
+  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+]
+
 const routes: Routes = [
   {
-    path: '',
+    path: 'admin',
     component: DashboardcontentComponent,
     canActivate: [AdminGuard],
     children: [
@@ -74,10 +78,12 @@ const routes: Routes = [
       {
         path: 'orders/details/:id',
         component: OrdersDetailsComponent
-      }
-
+      },
     ]
-  }];
+  },
+];
+
+
 
 @NgModule({
     declarations: [AppComponent, DashboardcontentComponent, SidebarComponent, DashboredComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent, OrdersListComponent, OrdersDetailsComponent],
@@ -92,9 +98,16 @@ const routes: Routes = [
         ColorPickerModule,
         UsersModule,
     ],
-    providers: [
-      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
-    ],
+    providers: providers,
     bootstrap: [AppComponent],
 })
 export class AppModule {}
+@NgModule({})
+export class AdminAppModule {
+  static forRoot(): ModuleWithProviders <AppModule> {
+    return {
+      ngModule: AppModule,
+      providers: providers
+    };
+  }
+}

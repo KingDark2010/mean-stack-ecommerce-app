@@ -31,7 +31,6 @@ export class SingleProductComponent implements OnInit {
     }
     this.cartToken.setCart(data);
     this.toastr.success('Product added to cart', 'Success');
-    window.location.reload();
   }
 
   buyNow(product: Product) {
@@ -44,7 +43,7 @@ export class SingleProductComponent implements OnInit {
       quantity: this.productQuantity
     }
     this.cartToken.setCart(data);
-    this.switchRouter.navigate(['/cart']);
+    this.switchRouter.navigateByUrl('/cart');
   }
 
   ngOnInit(): void {

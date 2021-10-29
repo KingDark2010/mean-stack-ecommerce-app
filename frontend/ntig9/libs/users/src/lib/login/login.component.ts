@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     this._usersService.login(this.loginForm.value).pipe(takeUntil(this.ngUnsubscribe)).subscribe( data => {
       this.localToken.setToken(data.data.token);
       //route to home
-      this.router.navigate(['/dashbored']);
+      this.router.navigate(['/']);
     },
     () => {
       this.invalidData = true;

@@ -1,0 +1,81 @@
+<div class="container">
+  <form [formGroup]="orderForm">
+    <div class="row">
+      <div class="col-8 my-4">
+        <div class="row mb-3">
+          <div class="col mb-3 form-floating">
+            <input type="text" class="form-control" id="floatingInput1" placeholder="shippingAddress1" formControlName="shippingAddress1">
+            <label for="floatingInput">Shipping Adress 1</label>
+          </div>
+          <div class="col mb-3 form-floating">
+            <input type="text" class="form-control" id="floatingInput2" placeholder="shippingAddress2" formControlName="shippingAddress2">
+            <label for="floatingInput">Shipping Adress 2</label>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput3" placeholder="shippingZip" formControlName="shippingZip">
+            <label for="floatingInput">Zip Code</label>
+          </div>
+          <div class="col form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput3" placeholder="shippingCity" formControlName="shippingCity">
+            <label for="floatingInput">City</label>
+          </div>
+          <div class="col form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput3" placeholder="shippingCountry" formControlName="shippingCountry">
+            <label for="floatingInput">Country</label>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="shippingPhone" formControlName="shippingPhone">
+            <label for="floatingPassword">Phone</label>
+          </div>
+          <div class="col form-check form-switch mx-5">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Fast shipping</label>
+            <label class="form-check-label" for="flexSwitchCheckDefault" hidden formControlName="user">Fast shipping</label>
+            <label class="form-check-label" for="flexSwitchCheckDefault" hidden formControlName="orderItems">Fast shipping</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 my-4">
+        <!-- draw a line break -->
+
+        <div class="card my-3">
+          <div class="card-header">
+            Order Summary
+          </div>
+          <div class="card-body">
+            <div class="row my-3" *ngFor="let item of cartProducts">
+              <div class="col-8">
+                <h5>{{item.name}}</h5>
+              </div>
+              <div class="col-4">
+                <img style="width: 50px; height: 50px;" src="http://localhost:4200/assets/public/single/{{productImage(item.image)}}" alt="" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                <h5>SubTotal</h5>
+                <h5>Taxes</h5>
+                <h5>Total</h5>
+              </div>
+              <div class="col-4" style="float: right;">
+                <h5>{{getSubTotal.total | currency}}</h5>
+                <h5>{{getSubTotal.tax | currency}}</h5>
+                <h5>{{getSubTotal.tax + getSubTotal.total | currency}}</h5>
+              </div>
+            </div>
+          </div>
+          <!-- add checkout btn -->
+          <div class="row my-3">
+            <div class="col-12">
+              <button (click)="checkout()" class="btn btn-success btn-block" style="width: 100%;">Checkout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

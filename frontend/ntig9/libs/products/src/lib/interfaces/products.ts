@@ -23,6 +23,28 @@ export interface Product {
   updated_at?: Date;
 }
 
+export interface OrderProduct {
+  _id: string;
+  name: string;
+  descriptionLite: string;
+  description: string;
+  price: number;
+  image: string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  category: Category;
+  brand: string;
+  seller: ProductSeller;
+  countInStock: number;
+  isFeatured?: boolean;
+  haveDiscount?: boolean;
+  discount?: number;
+  rating?: number;
+  tags?: string[];
+  created_at?: Date;
+  updated_at?: Date;
+  quantity: number;
+}
+
 export interface ProductObject {
   data: Product;
 }
@@ -34,4 +56,8 @@ export interface ProductsObject {
 
 export interface ProductSeller {
   firstName: string;
+}
+
+export interface OrderProductObject {
+  data: OrderProduct;
 }

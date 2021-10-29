@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { cartItem} from '@ntig9/orders';
+import { cartItem } from '@ntig9/orders';
+import { BehaviorSubject } from 'rxjs';
 
 const cartName = 'cart'
 @Injectable({
@@ -7,27 +8,32 @@ const cartName = 'cart'
 })
 export class CartServiceService {
 
+  cart$: BehaviorSubject<cartItem[]> = new BehaviorSubject(this.getCartItem());
 
   setCart(content: cartItem): void {
-    const data =  this.getCartItem();
+    let data =  this.getCartItem();
     if(data) {
-      const index = data.indexOf((item: cartItem) => item.productID === item.productID);
-      if (index > -1) {
+      //check if content.productID is part of the cart
+      const index = data.findIndex((item: { productID: string; }) => item.productID === content.productID);
+      console.log(index);
+      if(index > -1) {
         data[index].quantity += content.quantity;
       } else {
         data.push(content);
       }
-      localStorage.setItem(cartName, JSON.stringify(data))
-    }else {
-      localStorage.setItem(cartName, JSON.stringify([content]));
+    } else {
+      data = [content];
     }
+    this.cart$.next(data);
+    return localStorage.setItem(cartName, JSON.stringify(data));
   }
-
 
   getCartItem() {
     const cart = localStorage.getItem(cartName)
     if (cart) {
       return JSON.parse(cart)
+    }else {
+      return [];
     }
   }
 
@@ -41,7 +47,14 @@ export class CartServiceService {
     if (data) {
       const newData = data.filter((item: cartItem) => item.productID !== id);
       localStorage.setItem(cartName, JSON.stringify(newData));
+    }else {
+      return;
     }
+  }
+
+  // update cart item
+  updateCart(data: cartItem[]): void {
+    localStorage.setItem(cartName, JSON.stringify(data));
   }
 
 }

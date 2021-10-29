@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-indexing">
   <div class="container-fluid">
     <a class="navbar-brand logo col-3" routerLink="/" routerLinkActive="router-link-active"> <img src="/assets/Webp.net-resizeimage.png" alt="" style="width: 90px;"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,20 +22,13 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="cart" routerLink="/cart" routerLinkActive="router-link-active">
-            <button type="button" class="badge bg-light text-dark position-relative" style="border: none;">
-              <i class="bi bi-cart fs-2" aria-hidden="true"></i>
-              <span *ngIf="cartdata.length > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 1em;">
-                {{cartdata.length}}
-              </span>
-            </button>
-          </a>
+          <ui-orders></ui-orders>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!isLoggedIn;else user">
           <a class="nav-link active" aria-current="login" routerLink="/login" routerLinkActive="router-link-active">
 
             <i class="bi bi-person fs-2" aria-hidden="true"></i>
-            <span class="">Ahmed</span>
+
           </a>
         </li>
       </ul>
@@ -43,3 +36,16 @@
   </div>
 </nav>
 
+<ng-template #user>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="bi bi-person fs-2" aria-hidden="true"></i>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-right: 200px;">
+      <a class="dropdown-item" routerLink="/profile" routerLinkActive="router-link-active">Profile</a>
+      <a class="dropdown-item" routerLink="/admin/dashbored" routerLinkActive="router-link-active" *ngIf="isAdmin">Admin Dashboard</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item">Logout</a>
+    </ul>
+  </li>
+</ng-template>

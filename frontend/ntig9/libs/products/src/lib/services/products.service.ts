@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ProductObject, ProductsObject} from '@ntig9/products';
+import { OrderProduct, OrderProductObject, ProductObject, ProductsObject} from '@ntig9/products';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,9 @@ export class ProductsService {
   }
   getProduct(productID: string | undefined): Observable<ProductObject> {
     return this._http.get<ProductObject>(`${this.URL}product/${productID}`);
+  }
+  getOrderProduct(productID: string | undefined): Observable<OrderProductObject> {
+    return this._http.get<OrderProductObject>(`${this.URL}product/${productID}`);
   }
   getFeaturedProducts(): Observable<ProductsObject> {
     return this._http.get<ProductsObject>(`${this.URL}product/featured`);
