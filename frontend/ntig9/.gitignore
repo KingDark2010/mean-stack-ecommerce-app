@@ -40,3 +40,4 @@ Thumbs.db
 
 #ignore environment variables
 /apps/admin/src/environments/environment.ts
+.env
