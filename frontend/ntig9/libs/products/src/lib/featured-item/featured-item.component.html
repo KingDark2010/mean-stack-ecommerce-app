@@ -1,0 +1,27 @@
+<div>
+  <h4 class="h4 my-4">
+    Featured Products
+  </h4>
+  <div class="row" *ngIf="products.length === 0;else categoriesContent">
+    <div class="col-12">
+      <p class="text-center h5">
+        Products are been Added... Come back in a while
+      </p>
+    </div>
+  </div>
+</div>
+
+<ng-template #categoriesContent>
+  <div class="row">
+    <div class="col-2"  *ngFor="let product of products">
+      <a class="nav-link active" routerLink="/" routerLinkActive="router-link-active" style="color: black;">
+        <div class="card" [style.background-color]="product">
+          <div class="card-body align-self-center">
+            <h5 class="card-title"><i class="{{product}} fs-1"  style="margin-left: 0.6vw; color: black;"></i></h5>
+            <p class="card-text" style="color: black;">{{product}}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-template>

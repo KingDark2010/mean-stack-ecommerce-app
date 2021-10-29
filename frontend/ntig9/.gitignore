@@ -39,5 +39,5 @@ testem.log
 Thumbs.db
 
 #ignore environment variables
-/apps/admin/src/environments/environment.ts
-.env
+environment.ts
+environment.prod.ts
