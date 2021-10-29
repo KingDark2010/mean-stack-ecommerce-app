@@ -13,7 +13,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
   Users: User[] = [];
-
+  test():void {
+    console.log('test');
+  }
 
   productImage(image:string) {
     const newData = image.split('\\')
