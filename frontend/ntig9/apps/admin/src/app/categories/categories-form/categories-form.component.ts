@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService } from '@ntig9/products';
@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './categories-form.component.html',
   styleUrls: ['./categories-form.component.css']
 })
-export class CategoriesFormComponent implements OnInit {
+export class CategoriesFormComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject();
   editMode = false;
@@ -112,7 +112,7 @@ export class CategoriesFormComponent implements OnInit {
       }
     });
   }
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

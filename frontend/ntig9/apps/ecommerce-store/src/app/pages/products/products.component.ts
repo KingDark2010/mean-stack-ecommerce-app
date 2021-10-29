@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService, Category, Product, ProductsService } from '@ntig9/products';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'ecommerce-store-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
 
+  private ngUnsubscribe = new Subject();
   products: Product [] = [];
   editedProduct: Product[] = [];
   categories: Category [] = [];
@@ -19,10 +23,10 @@ export class ProductsComponent implements OnInit {
   constructor(private productsServices: ProductsService, private categoriesServices: CategoriesService, private router:ActivatedRoute ) { }
 
   ngOnInit(): void {
-    this.router.params.subscribe(params => {
+    this.router.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
       if(params.categoryname) {
         this.filtrerStatus = true;
-        this.productsServices.getProducts().subscribe(products => {
+        this.productsServices.getProducts().pipe(takeUntil(this.ngUnsubscribe)).subscribe(products => {
           products.data.forEach(product => {
             if (product.category.name === params.categoryname) {
               this.products.push(product);
@@ -31,11 +35,11 @@ export class ProductsComponent implements OnInit {
         })
       }else {
         this.filtrerStatus = false;
-        this.productsServices.getProducts().subscribe(products => {
+        this.productsServices.getProducts().pipe(takeUntil(this.ngUnsubscribe)).subscribe(products => {
           this.products = products.data;
           this.editedProduct = products.data;
         });
-        this.categoriesServices.getCategories().subscribe(categories => {
+        this.categoriesServices.getCategories().pipe(takeUntil(this.ngUnsubscribe)).subscribe(categories => {
           this.categories = categories.data;
         });
       }
@@ -67,5 +71,10 @@ export class ProductsComponent implements OnInit {
         this.products = this.editedProduct;
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

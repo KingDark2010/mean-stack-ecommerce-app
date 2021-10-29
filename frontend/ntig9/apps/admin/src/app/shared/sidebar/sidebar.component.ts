@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '@ntig9/products';
 import { Subject } from 'rxjs';
@@ -9,7 +9,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnDestroy {
 
   private ngUnsubscribe = new Subject();
   token = localStorage.getItem('AuthToken');
@@ -25,7 +25,7 @@ export class SidebarComponent {
     );
   }
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartServiceService } from '@ntig9/orders';
 import { OrderProduct, ProductsService } from '@ntig9/products';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 
@@ -10,8 +12,9 @@ import { OrderProduct, ProductsService } from '@ntig9/products';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
 
+  private ngUnsubscribe = new Subject();
   cartProducts: OrderProduct[] = [];
   singleproduct:OrderProduct = {} as OrderProduct;
 
@@ -22,10 +25,10 @@ export class CartComponent implements OnInit {
   constructor(private productServices: ProductsService, private cartToken: CartServiceService, private location: Location, private router:Router) { }
 
   ngOnInit(): void {
-    this.cartToken.cart$.pipe().subscribe(cart => {
+    this.cartToken.cart$.pipe().pipe(takeUntil(this.ngUnsubscribe)).subscribe(cart => {
       cart.forEach(item => {
         console.log(item.productID);
-        this.productServices.getOrderProduct(item.productID).subscribe(product => {
+        this.productServices.getOrderProduct(item.productID).pipe(takeUntil(this.ngUnsubscribe)).subscribe(product => {
           this.singleproduct = product.data
           this.singleproduct.quantity = item.quantity
           this.cartProducts.push(this.singleproduct);
@@ -54,5 +57,10 @@ export class CartComponent implements OnInit {
   }
   checkout() {
     this.router.navigate(['/checkout']);
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

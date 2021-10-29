@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User, UsersService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -11,7 +9,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.css']
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
   Users: User[] = [];
@@ -50,7 +48,7 @@ export class UsersListComponent implements OnInit {
       timeOut: 3000,
     });
   }
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

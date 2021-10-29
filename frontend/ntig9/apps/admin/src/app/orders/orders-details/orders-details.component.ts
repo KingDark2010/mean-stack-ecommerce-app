@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { OrderItems, OrdersService } from '@ntig9/orders';
@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './orders-details.component.html',
   styleUrls: ['./orders-details.component.css']
 })
-export class OrdersDetailsComponent implements OnInit {
+export class OrdersDetailsComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject();
   orderItems: OrderItems[] = [];
@@ -78,7 +78,7 @@ export class OrdersDetailsComponent implements OnInit {
       }
     });
   }
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OrdersService } from '@ntig9/orders';
 import { ProductsService, UsersService } from '@ntig9/products';
 import { Subject } from 'rxjs';
@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './dashbored.component.html',
   styleUrls: ['./dashbored.component.css']
 })
-export class DashboredComponent implements OnInit {
+export class DashboredComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject();
 
@@ -68,7 +68,7 @@ export class DashboredComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

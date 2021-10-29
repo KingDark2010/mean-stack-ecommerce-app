@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product, ProductsService } from '@ntig9/products';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -11,7 +9,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.css']
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject();
   Products: Product[] = [];
@@ -24,7 +22,7 @@ export class ProductsListComponent implements OnInit {
     const newData = image.split('\\')
     return newData[newData.length -1]
   }
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   constructor( private productService: ProductsService,  private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -50,7 +48,7 @@ export class ProductsListComponent implements OnInit {
       timeOut: 3000,
     });
   }
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

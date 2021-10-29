@@ -1,17 +1,21 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartServiceService } from '@ntig9/orders';
 import { OrderProduct, ProductsService } from '@ntig9/products';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms'
+import { FormGroup, FormBuilder } from '@angular/forms'
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'ecommerce-store-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
 
+  private ngUnsubscribe = new Subject();
   orderForm!: FormGroup;
   cartProducts: OrderProduct[] = [];
   singleproduct:OrderProduct = {} as OrderProduct;
@@ -33,10 +37,10 @@ export class CheckoutComponent implements OnInit {
       user: [''],
       orderItems: [''],
     });
-    this.cartToken.cart$.pipe().subscribe(cart => {
+    this.cartToken.cart$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(cart => {
       cart.forEach(item => {
         console.log(item.productID);
-        this.productServices.getOrderProduct(item.productID).subscribe(product => {
+        this.productServices.getOrderProduct(item.productID).pipe(takeUntil(this.ngUnsubscribe)).subscribe(product => {
           this.singleproduct = product.data
           this.singleproduct.quantity = item.quantity
           this.cartProducts.push(this.singleproduct);
@@ -67,4 +71,8 @@ export class CheckoutComponent implements OnInit {
     this.router.navigate(['/checkout']);
   }
 
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }
