@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { OrderProduct, OrderProductObject, ProductObject, ProductsObject} from '@ntig9/products';
+import { OrderProductObject, ProductObject, ProductsObject} from '@ntig9/products';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { environment } from '../../../../../apps/admin/src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   // create public URL for api
-  public URL = 'http://localhost:3000/';
+ /*  public URL = 'http://localhost:3000/'; */
+  URL = environment.apiUrl;
 
   constructor(private _http: HttpClient) { }
   getProducts(): Observable<ProductsObject> {

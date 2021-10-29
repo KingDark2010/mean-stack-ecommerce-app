@@ -14,11 +14,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   Products: Product[] = [];
 
-  deleteProduct(id:string) {
-    console.log(id);
-  }
   productImage(image:string) {
-    console.log(typeof image);
     const newData = image.split('\\')
     return newData[newData.length -1]
   }

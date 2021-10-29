@@ -18,7 +18,6 @@ export class SingleProductComponent implements OnInit, OnDestroy {
   productQuantity = 1;
   product: Product = {} as Product;
   productImage(image:string) {
-    console.log(typeof image);
     const newData = image.split('\\')
     return newData[newData.length -1]
   }

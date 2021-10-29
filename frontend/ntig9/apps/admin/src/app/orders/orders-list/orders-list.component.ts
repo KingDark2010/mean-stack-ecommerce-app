@@ -15,11 +15,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 
   Orders: Order[] = [];
 
-  deleteProduct(id:string) {
-    console.log(id);
-  }
   productImage(image:string) {
-    console.log(typeof image);
     const newData = image.split('\\')
     return newData[newData.length -1]
   }

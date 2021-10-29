@@ -39,14 +39,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
     this.cartToken.cart$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(cart => {
       cart.forEach(item => {
-        console.log(item.productID);
         this.productServices.getOrderProduct(item.productID).pipe(takeUntil(this.ngUnsubscribe)).subscribe(product => {
           this.singleproduct = product.data
           this.singleproduct.quantity = item.quantity
           this.cartProducts.push(this.singleproduct);
         });
       })
-      console.log(this.cartProducts);
     });
   }
   //get subtotal price from cartProducts

@@ -13,7 +13,6 @@ export class FeaturedProductsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   products: Product [] = [];
   productImage(image:string) {
-    console.log(typeof image);
     const newData = image.split('\\')
     return newData[newData.length -1]
   }

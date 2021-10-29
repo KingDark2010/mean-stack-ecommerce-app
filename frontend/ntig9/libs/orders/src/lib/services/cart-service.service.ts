@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { cartItem } from '@ntig9/orders';
 import { BehaviorSubject } from 'rxjs';
 
@@ -15,7 +16,6 @@ export class CartServiceService {
     if(data) {
       //check if content.productID is part of the cart
       const index = data.findIndex((item: { productID: string; }) => item.productID === content.productID);
-      console.log(index);
       if(index > -1) {
         data[index].quantity += content.quantity;
       } else {

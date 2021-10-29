@@ -81,7 +81,6 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onImageUpload(event: any) {
     const file = event.target.files[0];
-    console.log(file);
     if(file) {
       this.productForm.patchValue({image: file});
       this.productForm.get('image')?.updateValueAndValidity();
@@ -89,7 +88,6 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     this.isSubmitted = true;
-    console.log(this.productForm.value);
 
     if (this.productForm.valid) {
       if (this.editMode) {

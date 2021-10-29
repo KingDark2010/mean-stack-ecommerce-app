@@ -25,6 +25,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor( private fb: FormBuilder, private _usersService: UsersService, private localToken: TokenstorageService, private router: Router) { }
 
   ngOnInit(): void {
+    //check and if logged in redirect to home
+    if (this.localToken.getToken()) {
+      this.router.navigate(['/']);
+    }
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -33,16 +37,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onlogin() {
     this.isSubmited = true;
-    console.log(this.loginForm.value);
     if (this.loginForm.invalid) {
       return;
     }
-    console.log(this.loginForm.value);
-    console.log(this.controls.email.value);
     this._usersService.login(this.loginForm.value).pipe(takeUntil(this.ngUnsubscribe)).subscribe( data => {
       this.localToken.setToken(data.data.token);
-      //route to home
-      this.router.navigate(['/']);
+      this.router.navigate(['/']).then(() => {
+        window.location.reload();
+      });
     },
     () => {
       this.invalidData = true;

@@ -51,7 +51,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   categoryFilter($event: any, value: string) {
     if ($event.target.checked) {
       this.filteredCategories.push(value);
-      console.log(this.filteredCategories);
       this.products = []
       this.editedProduct.forEach(product => {
         if (this.filteredCategories.includes(product.category.name)) {

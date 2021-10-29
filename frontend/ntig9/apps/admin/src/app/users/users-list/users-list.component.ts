@@ -14,11 +14,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   Users: User[] = [];
 
-  deleteProduct(id:string) {
-    console.log(id);
-  }
+
   productImage(image:string) {
-    console.log(typeof image);
     const newData = image.split('\\')
     return newData[newData.length -1]
   }

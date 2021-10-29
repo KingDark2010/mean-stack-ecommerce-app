@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 @Component({
@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
 
   private ngUnsubscribe = new Subject();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -14,7 +14,7 @@ export class RegisterComponent {
 
 
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

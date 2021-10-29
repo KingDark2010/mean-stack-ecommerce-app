@@ -15,7 +15,6 @@ export class ProductItemComponent implements OnInit {
   productPage = false
 
   productImage(image:string) {
-    console.log(typeof image);
     const newData = image.split('\\')
     return newData[newData.length -1]
   }

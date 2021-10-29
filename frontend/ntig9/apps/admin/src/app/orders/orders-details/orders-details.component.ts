@@ -48,7 +48,6 @@ export class OrdersDetailsComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     this.isSubmitted = true;
-    console.log(this.orderForm.value);
     if (this.orderForm.valid) {
         this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
           this._orderServices.updateOrder(params.id, this.orderForm.value).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {

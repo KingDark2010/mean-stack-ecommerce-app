@@ -6,13 +6,16 @@ import { UserObject, UsersObject} from '@ntig9/products';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { TokenstorageService } from '@ntig9/users';
 import { Router } from '@angular/router';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { environment } from '../../../../../apps/admin/src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   // create public URL for api
-  public URL = 'http://localhost:3000/';
+  /* public URL = 'http://localhost:3000/'; */
+  URL = environment.apiUrl;
 
   constructor(private _http: HttpClient, private tokenStorage: TokenstorageService, private router: Router) { }
   getUsers(): Observable<UsersObject> {

@@ -18,7 +18,6 @@ export class SidebarComponent implements OnDestroy {
   logoutUser() {
     this.usersServices.logout(this.token).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       data => {
-        console.log(data);
         localStorage.removeItem('AuthToken');
         this.router.navigate(['/login']);
       }

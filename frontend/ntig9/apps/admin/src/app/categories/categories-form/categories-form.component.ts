@@ -61,7 +61,6 @@ export class CategoriesFormComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     this.isSubmitted = true;
-    console.log(this.categoryForm.value);
     if (this.categoryForm.valid) {
       if (this.editMode) {
         this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
