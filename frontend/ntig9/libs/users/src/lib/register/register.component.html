@@ -11,12 +11,17 @@
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="First Name" placeholder="First Name">
-      <input type="text" id="login" class="fadeIn third" name="Last Name" placeholder="Last Name">
-      <input type="text" id="login" class="fadeIn fourth" name="email" placeholder="Email">
-      <input type="text" id="login" class="fadeIn Fifth" name="Password" placeholder="Password">
-      <input type="text" id="password" class="fadeIn Sixth" name="Confirm Password" placeholder="Confirm Password">
+    <form [formGroup]="registerForm" (ngSubmit)="onregister()">
+      <input type="text" id="firstName" class="fadeIn second" name="First Name" placeholder="First Name" formControlName="firstName">
+      <p *ngIf="registerControls.firstName.invalid && isSubmitted && registerControls.confirmPassword.dirty === false" style="color: red ;">First Name can't be less than 3 latter</p>
+      <input type="text" id="lastName" class="fadeIn third" name="Last Name" placeholder="Last Name" formControlName="lastName">
+      <p *ngIf="registerControls.confirmPassword.invalid && isSubmitted && !registerControls.confirmPassword.dirty" style="color: red ;">Last Name can't be less than 3 latter</p>
+      <input type="email" id="email" class="fadeIn fourth" name="email" placeholder="Email" formControlName="email">
+      <p *ngIf="registerControls.confirmPassword.invalid && isSubmitted && !registerControls.confirmPassword.dirty" style="color: red ;"> Email must be provided</p>
+      <input type="password" id="password" class="fadeIn Fifth" name="Password" placeholder="Password" formControlName="password">
+      <p *ngIf="registerControls.confirmPassword.invalid && isSubmitted && registerControls.confirmPassword.dirty" style="color: red ;">Password must be at least 6 characters</p>
+      <input type="password" id="confpassword" class="fadeIn Sixth" name="Confirm Password" placeholder="Confirm Password" formControlName="confirmPassword">
+      <p *ngIf="registerControls.confirmPassword.invalid && isSubmitted" style="color: red ;">Password and Confirm Password must match</p>
       <input type="submit" class="fadeIn Seventh" value="SIGN UP">
     </form>
 

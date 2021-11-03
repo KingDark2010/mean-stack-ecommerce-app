@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product, ProductsService } from '@ntig9/products';
 import { cartItem, CartServiceService} from '@ntig9/orders';
@@ -11,19 +11,17 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './single-product.component.html',
   styleUrls: ['./single-product.component.css']
 })
-export class SingleProductComponent implements OnInit, OnDestroy {
+export class SingleProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  loading = true
   private ngUnsubscribe = new Subject();
   checked = false;
   productQuantity = 1;
   product: Product = {} as Product;
-  productImage(image:string) {
-    const newData = image.split('\\')
-    return newData[newData.length -1]
-  }
   constructor(private productServices: ProductsService, private router:ActivatedRoute, private cartToken: CartServiceService, private switchRouter: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.router.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
         this.productServices.getProduct(params.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(product => {
           this.product = product.data;
@@ -56,6 +54,13 @@ export class SingleProductComponent implements OnInit, OnDestroy {
     this.cartToken.setCart(data);
     this.switchRouter.navigateByUrl('/cart');
   }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.loading = false;
+    }, 200);
+  }
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

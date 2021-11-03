@@ -15,7 +15,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { AdminAppModule } from '../../../admin/src/app/app.module'
+import { AdminAppModule } from '../../../admin/src/app/app.module';
+import { ThankYouComponent } from './pages/thank-you/thank-you.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,10 +27,13 @@ const routes: Routes = [
   { path: 'product/:id', component: SingleProductComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'admin', loadChildren: () => AdminAppModule }
+  { path: 'thankyou', component: ThankYouComponent },
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'admin', loadChildren: () => AdminAppModule },
+  { path: '**', component: PageNotFoundComponent }
   ]
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ProductsComponent, NavbarComponent, FooterComponent, SingleProductComponent, CartComponent, CheckoutComponent],
+  declarations: [AppComponent, HomeComponent, ProductsComponent, NavbarComponent, FooterComponent, SingleProductComponent, CartComponent, CheckoutComponent, ThankYouComponent, UserProfileComponent,PageNotFoundComponent],
   imports: [BrowserModule,BrowserAnimationsModule, RouterModule.forRoot(routes), UiModule, HttpClientModule,FormsModule, ReactiveFormsModule, ToastrModule.forRoot(), AdminAppModule.forRoot()],
   providers: [],
   bootstrap: [AppComponent],

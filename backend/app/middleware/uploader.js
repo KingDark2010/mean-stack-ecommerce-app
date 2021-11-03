@@ -4,7 +4,7 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        const location = path.join("../frontend/ntig9/apps/admin/src/assets/public/single",'')// (req.user._id).toString() )
+        const location = path.join("public/single",'')// (req.user._id).toString() )
         fs.mkdir(location, (err)=>{})
         cb(null, location)
     },
@@ -18,8 +18,6 @@ const upload = multer({
     storage: storage,
     limits:{ fileSize: 150000},
     fileFilter: function(req, file, callback){
-        // let fType = "a"+req.body.fileType
-        // console.log(fType)
         ext = path.extname(file.originalname)
         // only accept .png, .jpg, .jpeg
         if(ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg'){

@@ -82,7 +82,6 @@ const userLogout = async (req, res) => {
     try{
         //find user by token inside array of tokens
         const user = await User.findOne({'tokens.token': req.body.token});
-        console.log(user);
         if(!user){
             return res.status(404).send(responseCreator(404, null, 'user not found'));
         }
@@ -135,6 +134,13 @@ const updateUser = async (req, res) => {
             return res.status(404).send(responseCreator(404, null, 'user not found'));
         }
         if(user){
+            //if password is updated
+            if(req.body.password){
+                const changePassword = user.changePassword(user.password, req.body.password);
+                if(!changePassword){
+                    return res.status(400).send(responseCreator(400, null, 'password not changed'));
+                }
+            }
             return res.status(200).send(responseCreator(200, user, 'user updated successfully'));
         }
     }

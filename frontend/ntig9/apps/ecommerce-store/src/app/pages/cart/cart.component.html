@@ -1,4 +1,4 @@
-<div class="container" style="background-color: #f8f9fa">
+<div class="container" style="background-color: #f8f9fa" [hidden]="loading">
   <!-- go back btn -->
   <button (click)="goBack()" class="btn btn-danger my-5">Back to Shopping</button>
   <div class="row">
@@ -18,7 +18,7 @@
           <tr>
             <td>
               <img style="width: 100px; height: 100px; margin-right: 2em;"
-                src="http://localhost:4200/assets/public/single/{{productImage(product.image)}}" alt="" />
+                src="https://api1.ahmed-raslan.com/{{product.image}}" alt="" />
               <span>{{product.name}}</span>
             </td>
             <td>
@@ -46,14 +46,10 @@
         <div class="card-body">
           <div class="row">
             <div class="col-8">
-              <h5>SubTotal</h5>
-              <h5>Taxes</h5>
               <h5>Total</h5>
             </div>
             <div class="col-4" style="float: right;">
               <h5>{{getSubTotal.total | currency}}</h5>
-              <h5>{{getSubTotal.tax | currency}}</h5>
-              <h5>{{getSubTotal.tax + getSubTotal.total | currency}}</h5>
             </div>
           </div>
         </div>
@@ -67,3 +63,6 @@
     </div>
   </div>
 </div>
+
+<ui-loader [hidden]="!loading"></ui-loader>
+

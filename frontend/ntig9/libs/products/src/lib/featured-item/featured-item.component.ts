@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { Product } from '@ntig9/products';
 
 @Component({
@@ -6,13 +7,8 @@ import { Product } from '@ntig9/products';
   templateUrl: './featured-item.component.html',
   styleUrls: ['./featured-item.component.css']
 })
-export class FeaturedItemComponent implements OnInit {
+export class FeaturedItemComponent {
 
   products: Product[] = [];
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

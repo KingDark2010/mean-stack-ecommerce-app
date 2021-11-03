@@ -22,7 +22,7 @@ export class OrdersService {
   }
 
   createOrder(order: OrdersObject): Observable<OrderObject> {
-    return this._http.post<OrderObject>(`${this.URL}add`, order);
+    return this._http.post<OrderObject>(`${this.URL}order/add`, order);
   }
   deleteOrder(orderID: string | undefined): Observable<OrderObject> {
     return this._http.delete<OrderObject>(`${this.URL}order/${orderID}`);

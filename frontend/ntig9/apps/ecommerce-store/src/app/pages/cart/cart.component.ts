@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartServiceService } from '@ntig9/orders';
 import { OrderProduct, ProductsService } from '@ntig9/products';
+import { TokenstorageService } from '@ntig9/users';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -12,8 +13,9 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  loading = true;
   private ngUnsubscribe = new Subject();
   cartProducts: OrderProduct[] = [];
   singleproduct:OrderProduct = {} as OrderProduct;
@@ -22,9 +24,11 @@ export class CartComponent implements OnInit, OnDestroy {
     const newData = image.split('\\')
     return newData[newData.length -1]
   }
-  constructor(private productServices: ProductsService, private cartToken: CartServiceService, private location: Location, private router:Router) { }
+  constructor(private productServices: ProductsService, private cartToken: CartServiceService, private location: Location,
+    private router:Router, private localToken: TokenstorageService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.cartToken.cart$.pipe().pipe(takeUntil(this.ngUnsubscribe)).subscribe(cart => {
       cart.forEach(item => {
         this.productServices.getOrderProduct(item.productID).pipe(takeUntil(this.ngUnsubscribe)).subscribe(product => {
@@ -54,7 +58,23 @@ export class CartComponent implements OnInit, OnDestroy {
     this.location.back();
   }
   checkout() {
-    this.router.navigate(['/checkout']);
+    const cart = this.cartToken.cart$.getValue();
+    if (cart.length > 0) {
+      if (this.localToken.getToken()) {
+        this.router.navigate(['/checkout']);
+      } else {
+        this.router.navigate(['/login']);
+      }
+    } else {
+      alert('Cart is empty');
+    }
+  }
+
+  ngAfterViewInit(): void {
+    //timeout to wait for the cart to load
+    setTimeout(() => {
+      this.loading = false;
+    }, 200);
   }
 
   ngOnDestroy(): void {

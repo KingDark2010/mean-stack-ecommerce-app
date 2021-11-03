@@ -1,11 +1,15 @@
 //install express
 const express = require('express');
+const path = require('path');
 const app = express();
 // install dotenv
 require('dotenv').config();
 // install cors
 const cors = require('cors');
 app.use(cors());
+
+//use express static to serve the images from the public/single folder
+app.use(express.static(path.join(__dirname, '../')));
 
 // require user route
 const userRoute = require('../app/routes/user.route');

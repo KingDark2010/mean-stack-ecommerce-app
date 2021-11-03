@@ -77,9 +77,6 @@ const updateProduct = async (req, res) => {
         if(!product) {
             return res.status(404).send(responseCreator(404, null, 'No product found'));
         }
-        console.log(product);
-        console.log("break break break")
-        console.log(req.body);
         res.status(200).send(responseCreator(200, product, 'Product updated successfully'));
     } catch (error) {
         res.status(500).send(responseCreator(500, null, error.message));
@@ -114,7 +111,6 @@ const countProducts = async (req, res) => {
 const getFeaturedProducts = async (req, res) => {
     try {
         const products = await Product.find({isFeatured: true}).populate('category').populate('seller');
-        console.log(products);
         if(!products) {
             return res.status(404).send(responseCreator(404, null, 'No products found'));
         }

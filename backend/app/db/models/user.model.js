@@ -72,7 +72,7 @@ const userSchema = mongoose.Schema({
     },
     isActive: {
         type: Boolean,
-        default: false
+        default: true // was set to true to help testing application
     },
     isDeleted: {
         type: Boolean,
@@ -125,6 +125,17 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user;
 };
 
+//user change password 
+userSchema.methods.changePassword = async function (oldPassword, newPassword) {
+    const user = this;
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+        throw new Error('Unable to change password');
+    }
+    user.password = await bcrypt.hash(newPassword, 8);
+    await user.save();
+};
+
 //generate token
 userSchema.methods.generateAuthToken = async function () {
     const user = this;
@@ -158,7 +169,6 @@ userSchema.methods.activateTokenExpired = async function () {
         return true;
     }
     const decoded =  jwt.decode(token, process.env.JWT_SECRET_ACTIVATE);
-    console.log(decoded.exp <= parseInt(Date.now() / 1000))
     if (decoded.exp <= parseInt(Date.now() / 1000)) {
         return true;
     }
@@ -183,7 +193,6 @@ userSchema.methods.deactivateTokenExpired = async function () {
         return true;
     }
     const decoded =  jwt.decode(token, process.env.JWT_SECRET_DEACTIVATE);
-    console.log(decoded.exp <= parseInt(Date.now() / 1000))
     if (decoded.exp <= parseInt(Date.now() / 1000)) {
         return true;
     }

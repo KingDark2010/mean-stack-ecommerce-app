@@ -3,7 +3,7 @@
   <div class="card">
     <h5 class="card-header">List of Categories</h5>
     <div class="card-body">
-      <a routerLink="/categories/form" class="btn btn-success my-3">New</a>
+      <a routerLink="/admin/categories/form" class="btn btn-success my-3">New</a>
       <table class="table">
         <thead>
           <tr>
@@ -19,7 +19,7 @@
             <td>{{item.name}}</td>
             <td><i class="{{item.icon}} fs-2" [style.color]="item.color"></i></td>
             <td>
-              <a routerLink="/categories/form/{{item._id}}" type="button" class="btn btn-outline-primary mx-3"><i class="bi bi-pencil-square"></i></a>
+              <a routerLink="/admin/categories/form/{{item._id}}" type="button" class="btn btn-outline-primary mx-3"><i class="bi bi-pencil-square"></i></a>
               <button  (click)="deleteCategory(item._id)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-trash-fill"></i></button>
             </td>
           </tr>

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { cartItem, CartServiceService } from '@ntig9/orders';
 import { Product } from '@ntig9/products';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -14,12 +16,7 @@ export class ProductItemComponent implements OnInit {
   @Input() products: Product[] = [];
   productPage = false
 
-  productImage(image:string) {
-    const newData = image.split('\\')
-    return newData[newData.length -1]
-  }
-
-  constructor(private router:Router) { }
+  constructor(private router:Router, private cartToken: CartServiceService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     if(this.router.url === '/products') {
@@ -27,4 +24,21 @@ export class ProductItemComponent implements OnInit {
     }
   }
 
+  addToCart(product: Product) {
+    const data: cartItem = {
+      productID: product._id,
+      quantity: 1
+    }
+    this.cartToken.setCart(data);
+    this.toastr.success('Product added to cart', 'Success');
+  }
+
+  buyNow(product: Product) {
+    const data: cartItem = {
+      productID: product._id,
+      quantity: 1
+    }
+    this.cartToken.setCart(data);
+    this.router.navigateByUrl('/cart');
+  }
 }

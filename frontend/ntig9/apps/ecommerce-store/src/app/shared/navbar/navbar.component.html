@@ -16,9 +16,6 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="products" routerLink="/products" routerLinkActive="router-link-active">Products</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="contact" routerLink="/contact" routerLinkActive="router-link-active">Contact</a>
-        </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
@@ -45,7 +42,7 @@
       <a class="dropdown-item" routerLink="/profile" routerLinkActive="router-link-active">Profile</a>
       <a class="dropdown-item" routerLink="/admin/dashbored" routerLinkActive="router-link-active" *ngIf="isAdmin">Admin Dashboard</a>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item">Logout</a>
+      <button (click)="logoutUser()" class="dropdown-item">Logout</button>
     </ul>
   </li>
 </ng-template>

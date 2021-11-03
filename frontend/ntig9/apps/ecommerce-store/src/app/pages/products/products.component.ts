@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService, Category, Product, ProductsService } from '@ntig9/products';
 import { Subject } from 'rxjs';
@@ -10,8 +10,9 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  loading = true;
   private ngUnsubscribe = new Subject();
   products: Product [] = [];
   editedProduct: Product[] = [];
@@ -23,6 +24,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor(private productsServices: ProductsService, private categoriesServices: CategoriesService, private router:ActivatedRoute ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.router.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
       if(params.categoryname) {
         this.filtrerStatus = true;
@@ -72,6 +74,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.loading = false;
+    }, 200);
+  }
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

@@ -1,5 +1,5 @@
 
-<div class="container" style="background-color: #f8f9fa;">
+<div class="container" style="background-color: #f8f9fa;" [hidden]="loading">
   <div class="row" style="padding-top: 7vh;" *ngIf="!filtrerStatus;else allproducts">
     <div class="col-3" >
       <h3 class="h3" style="margin-bottom: 3vh;">Categories:</h3>
@@ -25,3 +25,5 @@
     <ui-product-item [products]="products"></ui-product-item>
   </div>
 </ng-template>
+
+<ui-loader [hidden]="!loading"></ui-loader>
