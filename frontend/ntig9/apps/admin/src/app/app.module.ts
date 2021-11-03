@@ -21,72 +21,83 @@ import { OrdersListComponent } from './orders/orders-list/orders-list.component'
 import { OrdersDetailsComponent } from './orders/orders-details/orders-details.component';
 import { AdminGuard, JwtInterceptor, UsersModule } from '@ntig9/users';
 
-const providers =  [
-  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
-]
-
-const routes: Routes = [
-  {
-    path: 'admin',
-    component: DashboardcontentComponent,
-    canActivate: [AdminGuard],
-    children: [
-      {
-        path: 'dashbored',
-        component: DashboredComponent
-      },
-      {
-        path: 'categories',
-        component: CategoriesListComponent
-      },
-      {
-        path: 'categories/form',
-        component: CategoriesFormComponent
-      },
-      {
-        path: 'categories/form/:id',
-        component: CategoriesFormComponent
-      },
-      {
-        path: 'products',
-        component: ProductsListComponent
-      },
-      {
-        path: 'products/form',
-        component: ProductsFormComponent
-      },
-      {
-        path: 'products/form/:id',
-        component: ProductsFormComponent
-      },
-      {
-        path: 'users',
-        component: UsersListComponent
-      },
-      {
-        path: 'users/form',
-        component: UsersFormComponent
-      },
-      {
-        path: 'users/form/:id',
-        component: UsersFormComponent
-      },
-      {
-        path: 'orders',
-        component: OrdersListComponent
-      },
-      {
-        path: 'orders/details/:id',
-        component: OrdersDetailsComponent
-      },
-    ]
-  },
+const providers = [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 ];
 
-
+const routes: Routes = [
+    {
+        path: 'admin',
+        component: DashboardcontentComponent,
+        canActivate: [AdminGuard],
+        children: [
+            {
+                path: 'dashbored',
+                component: DashboredComponent,
+            },
+            {
+                path: 'categories',
+                component: CategoriesListComponent,
+            },
+            {
+                path: 'categories/form',
+                component: CategoriesFormComponent,
+            },
+            {
+                path: 'categories/form/:id',
+                component: CategoriesFormComponent,
+            },
+            {
+                path: 'products',
+                component: ProductsListComponent,
+            },
+            {
+                path: 'products/form',
+                component: ProductsFormComponent,
+            },
+            {
+                path: 'products/form/:id',
+                component: ProductsFormComponent,
+            },
+            {
+                path: 'users',
+                component: UsersListComponent,
+            },
+            {
+                path: 'users/form',
+                component: UsersFormComponent,
+            },
+            {
+                path: 'users/form/:id',
+                component: UsersFormComponent,
+            },
+            {
+                path: 'orders',
+                component: OrdersListComponent,
+            },
+            {
+                path: 'orders/details/:id',
+                component: OrdersDetailsComponent,
+            },
+        ],
+    },
+];
 
 @NgModule({
-    declarations: [AppComponent, DashboardcontentComponent, SidebarComponent, DashboredComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent, OrdersListComponent, OrdersDetailsComponent],
+    declarations: [
+        AppComponent,
+        DashboardcontentComponent,
+        SidebarComponent,
+        DashboredComponent,
+        CategoriesListComponent,
+        CategoriesFormComponent,
+        ProductsListComponent,
+        ProductsFormComponent,
+        UsersFormComponent,
+        UsersListComponent,
+        OrdersListComponent,
+        OrdersDetailsComponent,
+    ],
     imports: [
         BrowserModule,
         RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
@@ -104,10 +115,10 @@ const routes: Routes = [
 export class AppModule {}
 @NgModule({})
 export class AdminAppModule {
-  static forRoot(): ModuleWithProviders <AppModule> {
-    return {
-      ngModule: AppModule,
-      providers: providers
-    };
-  }
+    static forRoot(): ModuleWithProviders<AppModule> {
+        return {
+            ngModule: AppModule,
+            providers: providers,
+        };
+    }
 }

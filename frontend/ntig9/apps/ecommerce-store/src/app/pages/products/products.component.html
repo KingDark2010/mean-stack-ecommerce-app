@@ -1,29 +1,36 @@
-
-<div class="container" style="background-color: #f8f9fa;" [hidden]="loading">
-  <div class="row" style="padding-top: 7vh;" *ngIf="!filtrerStatus;else allproducts">
-    <div class="col-3" >
-      <h3 class="h3" style="margin-bottom: 3vh;">Categories:</h3>
-      <div class="form-check" *ngFor="let Category of categories">
-        <form>
-          <input class="form-check-input" type="checkbox" value="{{Category.name}}" id="flexCheckDefault" (change)="categoryFilter($event, Category.name)">
-          <label class="form-check-label" for="flexCheckDefault">
-            {{Category.name}}
-          </label>
-        </form>
-      </div>
+<div class="container" style="background-color: #f8f9fa" [hidden]="loading">
+    <div
+        class="row"
+        style="padding-top: 7vh"
+        *ngIf="!filtrerStatus; else allproducts"
+    >
+        <div class="col-3">
+            <h3 class="h3" style="margin-bottom: 3vh">Categories:</h3>
+            <div class="form-check" *ngFor="let Category of categories">
+                <form>
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="{{ Category.name }}"
+                        id="flexCheckDefault"
+                        (change)="categoryFilter($event, Category.name)"
+                    />
+                    <label class="form-check-label" for="flexCheckDefault">
+                        {{ Category.name }}
+                    </label>
+                </form>
+            </div>
+        </div>
+        <div class="col-9" style="background-color: #f8f9fa; padding-top: 7vh">
+            <ui-product-item [products]="products"></ui-product-item>
+        </div>
     </div>
-    <div class="col-9" style="background-color: #f8f9fa;padding-top: 7vh;">
-      <ui-product-item [products]="products"></ui-product-item>
-    </div>
-  </div>
 </div>
 
-
 <ng-template #allproducts>
-
-  <div class="col-12" style="padding-top: 7vh; height: 100vh;">
-    <ui-product-item [products]="products"></ui-product-item>
-  </div>
+    <div class="col-12" style="padding-top: 7vh; height: 100vh">
+        <ui-product-item [products]="products"></ui-product-item>
+    </div>
 </ng-template>
 
 <ui-loader [hidden]="!loading"></ui-loader>

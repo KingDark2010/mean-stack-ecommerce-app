@@ -1,27 +1,28 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {CartServiceService } from '@ntig9/orders';
+import { CartServiceService } from '@ntig9/orders';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'ui-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css']
+    selector: 'ui-orders',
+    templateUrl: './orders.component.html',
+    styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit, OnDestroy {
+    private ngUnsubscribe = new Subject();
+    cartData = 0;
 
-  private ngUnsubscribe = new Subject();
-  cartData = 0;
+    constructor(private cartToken: CartServiceService) {}
 
-  constructor(private cartToken: CartServiceService) { }
-
-  ngOnInit(): void {
-    this.cartToken.cart$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(cart => {
-      this.cartData = cart.length
-    })
-  }
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
+    ngOnInit(): void {
+        this.cartToken.cart$
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((cart) => {
+                this.cartData = cart.length;
+            });
+    }
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
+    }
 }

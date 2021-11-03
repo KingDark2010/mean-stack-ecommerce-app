@@ -1,94 +1,183 @@
-<div class="container" [hidden]="loading" style="margin-bottom: 300px;">
-  <form [formGroup]="orderForm">
-    <div class="row">
-      <div class="col-8 my-4">
-        <div class="row mb-3">
-          <div class="col mb-3 form-floating">
-            <input type="text" class="form-control" id="floatingInput1" placeholder="shippingAddress1" formControlName="shippingAddress1">
-            <label for="floatingInput">Shipping Adress 1</label>
-            <!-- add danger class div with text shipping andress can't be empty -->
-            <div class="alert alert-danger my-2" role="alert" *ngIf="formControls.shippingAddress1.invalid && isSubmitted">
-              A Shipping Adress is required !
+<div class="container" [hidden]="loading" style="margin-bottom: 300px">
+    <form [formGroup]="orderForm">
+        <div class="row">
+            <div class="col-8 my-4">
+                <div class="row mb-3">
+                    <div class="col mb-3 form-floating">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingInput1"
+                            placeholder="shippingAddress1"
+                            formControlName="shippingAddress1"
+                        />
+                        <label for="floatingInput">Shipping Adress 1</label>
+                        <!-- add danger class div with text shipping andress can't be empty -->
+                        <div
+                            class="alert alert-danger my-2"
+                            role="alert"
+                            *ngIf="
+                                formControls.shippingAddress1.invalid &&
+                                isSubmitted
+                            "
+                        >
+                            A Shipping Adress is required !
+                        </div>
+                    </div>
+                    <div class="col mb-3 form-floating">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingInput2"
+                            placeholder="shippingAddress2"
+                            formControlName="shippingAddress2"
+                        />
+                        <label for="floatingInput"
+                            >Shipping Adress 2 (optional)</label
+                        >
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingInput3"
+                            placeholder="shippingZip"
+                            formControlName="shippingZip"
+                        />
+                        <label for="floatingInput">Zip Code</label>
+                        <div
+                            class="alert alert-danger my-2"
+                            role="alert"
+                            *ngIf="
+                                formControls.shippingZip.invalid && isSubmitted
+                            "
+                        >
+                            A Zip Code is required !
+                        </div>
+                    </div>
+                    <div class="col form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingInput3"
+                            placeholder="shippingCity"
+                            formControlName="shippingCity"
+                        />
+                        <label for="floatingInput">City</label>
+                        <div
+                            class="alert alert-danger my-2"
+                            role="alert"
+                            *ngIf="
+                                formControls.shippingCity.invalid && isSubmitted
+                            "
+                        >
+                            A City is required !
+                        </div>
+                    </div>
+                    <div class="col form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingInput3"
+                            placeholder="shippingCountry"
+                            formControlName="shippingCountry"
+                        />
+                        <label for="floatingInput">Country</label>
+                        <div
+                            class="alert alert-danger my-2"
+                            role="alert"
+                            *ngIf="
+                                formControls.shippingCountry.invalid &&
+                                isSubmitted
+                            "
+                        >
+                            A Country is required !
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="floatingPassword"
+                            placeholder="shippingPhone"
+                            formControlName="shippingPhone"
+                        />
+                        <label for="floatingPassword">Phone</label>
+                        <div
+                            class="alert alert-danger my-2"
+                            role="alert"
+                            *ngIf="
+                                formControls.shippingPhone.invalid &&
+                                isSubmitted
+                            "
+                        >
+                            A Phone is required !
+                        </div>
+                    </div>
+                    <div class="col form-check form-switch mx-5">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckDefault"
+                        />
+                        <label
+                            class="form-check-label"
+                            for="flexSwitchCheckDefault"
+                            >Fast shipping</label
+                        >
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col mb-3 form-floating">
-            <input type="text" class="form-control" id="floatingInput2" placeholder="shippingAddress2" formControlName="shippingAddress2">
-            <label for="floatingInput">Shipping Adress 2 (optional)</label>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput3" placeholder="shippingZip" formControlName="shippingZip">
-            <label for="floatingInput">Zip Code</label>
-            <div class="alert alert-danger my-2" role="alert" *ngIf="formControls.shippingZip.invalid && isSubmitted">
-              A Zip Code is required !
-            </div>
-          </div>
-          <div class="col form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput3" placeholder="shippingCity" formControlName="shippingCity">
-            <label for="floatingInput">City</label>
-            <div class="alert alert-danger my-2" role="alert" *ngIf="formControls.shippingCity.invalid && isSubmitted">
-              A City is required !
-            </div>
-          </div>
-          <div class="col form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput3" placeholder="shippingCountry" formControlName="shippingCountry">
-            <label for="floatingInput">Country</label>
-            <div class="alert alert-danger my-2" role="alert" *ngIf="formControls.shippingCountry.invalid && isSubmitted">
-              A Country is required !
-            </div>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col form-floating mb-3">
-            <input type="text" class="form-control" id="floatingPassword" placeholder="shippingPhone" formControlName="shippingPhone">
-            <label for="floatingPassword">Phone</label>
-            <div class="alert alert-danger my-2" role="alert" *ngIf="formControls.shippingPhone.invalid && isSubmitted">
-              A Phone is required !
-            </div>
-          </div>
-          <div class="col form-check form-switch mx-5">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Fast shipping</label>
-          </div>
-        </div>
-      </div>
-      <div class="col-4 my-4">
-        <!-- draw a line break -->
+            <div class="col-4 my-4">
+                <!-- draw a line break -->
 
-        <div class="card my-3">
-          <div class="card-header">
-            Order Summary
-          </div>
-          <div class="card-body">
-            <div class="row my-3" *ngFor="let item of cartProducts">
-              <div class="col-8">
-                <h5>{{item.name}}</h5>
-              </div>
-              <div class="col-4">
-                <img style="width: 50px; height: 50px;" src="https://api1.ahmed-raslan.com/{{item.image}}" alt="" />
-              </div>
+                <div class="card my-3">
+                    <div class="card-header">Order Summary</div>
+                    <div class="card-body">
+                        <div class="row my-3" *ngFor="let item of cartProducts">
+                            <div class="col-8">
+                                <h5>{{ item.name }}</h5>
+                            </div>
+                            <div class="col-4">
+                                <img
+                                    style="width: 50px; height: 50px"
+                                    src="https://api1.ahmed-raslan.com/{{
+                                        item.image
+                                    }}"
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <h5>Total</h5>
+                            </div>
+                            <div class="col-4" style="float: right">
+                                <h5>{{ getSubTotal.total | currency }}</h5>
+                                <h5>Vat included</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- add checkout btn -->
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <button
+                                (click)="placeOrder()"
+                                class="btn btn-success btn-block"
+                                style="width: 100%"
+                            >
+                                Place Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-              <div class="col-8">
-                <h5>Total</h5>
-              </div>
-              <div class="col-4" style="float: right;">
-                <h5>{{getSubTotal.total | currency}}</h5>
-                <h5>Vat included</h5>
-              </div>
-            </div>
-          </div>
-          <!-- add checkout btn -->
-          <div class="row my-3">
-            <div class="col-12">
-              <button (click)="placeOrder()" class="btn btn-success btn-block" style="width: 100%;">Place Order</button>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </form>
+    </form>
 </div>
 
 <ui-loader [hidden]="!loading"></ui-loader>

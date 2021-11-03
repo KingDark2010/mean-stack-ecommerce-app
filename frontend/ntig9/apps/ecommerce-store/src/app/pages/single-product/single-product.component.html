@@ -1,36 +1,69 @@
-<div class="container" style="background-color: #f8f9fa;" [hidden]="loading">
-  <div class="row">
-    <div class="col-6">
-      <img class="align-self-center " src="https://api1.ahmed-raslan.com/{{product.image}}" alt="" style="width: 100%;">
+<div class="container" style="background-color: #f8f9fa" [hidden]="loading">
+    <div class="row">
+        <div class="col-6">
+            <img
+                class="align-self-center"
+                src="https://api1.ahmed-raslan.com/{{ product.image }}"
+                alt=""
+                style="width: 100%"
+            />
+        </div>
+        <div class="col-6">
+            <h3 class="h3">{{ product.name }}</h3>
+            <p>{{ product.descriptionLite }}</p>
+            <p class="h5 my-4">{{ product.price | currency }}</p>
+            <p class="my-4">{{ product.countInStock }} Item in Stock</p>
+            <!-- quantity input field -->
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label"
+                    >Quantity</label
+                >
+                <input
+                    type="number"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    style="width: 40%"
+                    [(ngModel)]="productQuantity"
+                />
+                <div
+                    class="h6 alert alert-danger my-3"
+                    *ngIf="
+                        checked &&
+                        (productQuantity > product.countInStock ||
+                            productQuantity <= 0)
+                    "
+                >
+                    must be number and between 1 and {{ product.countInStock }}
+                </div>
+                <h6 class="h6 my-4" style="color: green">Free Shipping</h6>
+            </div>
+            <!-- add to cart button -->
+            <div class="product-btns">
+                <button
+                    class="btn btn-outline-primary"
+                    (click)="buyNow(product)"
+                >
+                    Buy New
+                </button>
+                <button
+                    class="btn btn-outline-primary mx-4"
+                    (click)="addToCart(product)"
+                >
+                    Add to cart
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="col-6">
-      <h3 class="h3">{{product.name}}</h3>
-      <p>{{product.descriptionLite}}</p>
-      <p class="h5 my-4">{{product.price | currency}}</p>
-      <p class="my-4">{{product.countInStock}} Item in Stock</p>
-      <!-- quantity input field -->
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Quantity</label>
-        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" style="width: 40%;" [(ngModel)]="productQuantity">
-        <div  class="h6 alert alert-danger my-3" *ngIf="checked && (productQuantity > product.countInStock || productQuantity <= 0 )"> must be number and between 1 and {{product.countInStock}}</div>
-        <h6 class="h6 my-4" style="color: green;">Free Shipping</h6>
-      </div>
-      <!-- add to cart button -->
-      <div class="product-btns">
-        <button class="btn btn-outline-primary" (click)="buyNow(product)">Buy New</button>
-        <button class="btn btn-outline-primary mx-4" (click)="addToCart(product)">Add to cart</button>
-      </div>
+    <div class="row my-5">
+        <hr class="divider" />
     </div>
-  </div>
-  <div class="row my-5">
-    <hr class="divider">
-  </div>
-  <h5 class="h5">Product description</h5>
-  <div class="row py-4">
-    <div class="col-12">
-      <p>{{product.description}}</p>
+    <h5 class="h5">Product description</h5>
+    <div class="row py-4">
+        <div class="col-12">
+            <p>{{ product.description }}</p>
+        </div>
     </div>
-  </div>
 </div>
 
 <ui-loader [hidden]="!loading"></ui-loader>

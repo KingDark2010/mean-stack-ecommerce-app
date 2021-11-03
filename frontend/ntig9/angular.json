@@ -20,8 +20,14 @@
                             "apps/admin/src/favicon.ico",
                             "apps/admin/src/assets"
                         ],
-                        "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css","node_modules/bootstrap-icons/font/bootstrap-icons.css", "node_modules/ngx-toastr/toastr.css"],
-                        "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
+                        "styles": [
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+                            "node_modules/ngx-toastr/toastr.css"
+                        ],
+                        "scripts": [
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
@@ -91,7 +97,8 @@
                         "passWithNoTests": true
                     }
                 }
-            }
+            },
+            "tags": []
         },
         "admin-e2e": {
             "root": "apps/admin-e2e",
@@ -116,7 +123,9 @@
                         "lintFilePatterns": ["apps/admin-e2e/**/*.{js,ts}"]
                     }
                 }
-            }
+            },
+            "tags": [],
+            "implicitDependencies": ["admin"]
         },
         "ecommerce-store": {
             "projectType": "application",
@@ -137,8 +146,14 @@
                             "apps/ecommerce-store/src/favicon.ico",
                             "apps/ecommerce-store/src/assets"
                         ],
-                        "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css","node_modules/bootstrap-icons/font/bootstrap-icons.css", "node_modules/ngx-toastr/toastr.css"],
-                        "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
+                        "styles": [
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+                            "node_modules/ngx-toastr/toastr.css"
+                        ],
+                        "scripts": [
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
@@ -208,7 +223,8 @@
                         "passWithNoTests": true
                     }
                 }
-            }
+            },
+            "tags": []
         },
         "ecommerce-store-e2e": {
             "root": "apps/ecommerce-store-e2e",
@@ -236,7 +252,35 @@
                         ]
                     }
                 }
-            }
+            },
+            "tags": [],
+            "implicitDependencies": ["ecommerce-store"]
+        },
+        "main-lib": {
+            "projectType": "library",
+            "root": "libs/main-lib",
+            "sourceRoot": "libs/main-lib/src",
+            "prefix": "ntig9",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/main-lib"],
+                    "options": {
+                        "jestConfig": "libs/main-lib/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/main-lib/src/**/*.ts",
+                            "libs/main-lib/src/**/*.html"
+                        ]
+                    }
+                }
+            },
+            "tags": []
         },
         "orders": {
             "projectType": "library",
@@ -277,7 +321,8 @@
                         ]
                     }
                 }
-            }
+            },
+            "tags": []
         },
         "products": {
             "projectType": "library",
@@ -302,7 +347,8 @@
                         ]
                     }
                 }
-            }
+            },
+            "tags": []
         },
         "ui": {
             "root": "libs/ui",
@@ -323,7 +369,8 @@
                         "passWithNoTests": true
                     }
                 }
-            }
+            },
+            "tags": []
         },
         "users": {
             "projectType": "library",
@@ -364,12 +411,9 @@
                         ]
                     }
                 }
-            }
+            },
+            "tags": []
         }
-    },
-    "cli": {
-        "defaultCollection": "@nrwl/angular",
-        "packageManager": "npm"
     },
     "schematics": {
         "@nrwl/angular": {
@@ -397,6 +441,5 @@
         "@nrwl/angular:component": {
             "style": "css"
         }
-    },
-    "defaultProject": "ecommerce-store"
+    }
 }

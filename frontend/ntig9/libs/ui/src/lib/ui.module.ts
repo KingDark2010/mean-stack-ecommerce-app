@@ -12,20 +12,20 @@ import { LoaderComponent } from './loader/loader.component';
 @NgModule({
     imports: [CommonModule, RouterModule, HttpClientModule],
     declarations: [
-      BannerComponent,
-      CategoriesBannerComponent,
-      FeaturedProductsComponent,
-      ProductItemComponent,
-      OrdersComponent,
-      LoaderComponent,
+        BannerComponent,
+        CategoriesBannerComponent,
+        FeaturedProductsComponent,
+        ProductItemComponent,
+        OrdersComponent,
+        LoaderComponent,
     ],
     exports: [
-      BannerComponent,
-      CategoriesBannerComponent,
-      FeaturedProductsComponent,
-      ProductItemComponent,
-      OrdersComponent,
-      LoaderComponent,
+        BannerComponent,
+        CategoriesBannerComponent,
+        FeaturedProductsComponent,
+        ProductItemComponent,
+        OrdersComponent,
+        LoaderComponent,
     ],
 })
 export class UiModule {}

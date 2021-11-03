@@ -1,32 +1,31 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Router,NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'ecommerce-store-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+    selector: 'ecommerce-store-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements  OnDestroy {
-  title = 'ecommerce-store';
-  adminRoute = false
-  private ngUnsubscribe = new Subject();
-  constructor(router:Router) {
+export class AppComponent implements OnDestroy {
+    title = 'ecommerce-store';
+    adminRoute = false;
+    private ngUnsubscribe = new Subject();
+    constructor(router: Router) {
+        router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                if (event.url.includes('admin')) {
+                    this.adminRoute = true;
+                } else {
+                    this.adminRoute = false;
+                }
+            }
+        });
+    }
 
-    router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        if (event.url.includes('admin')) {
-          this.adminRoute = true;
-        } else {
-          this.adminRoute = false;
-        }
-      }
-    })
-  }
-
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
+    ngOnDestroy() {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
+    }
 }

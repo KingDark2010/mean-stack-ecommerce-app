@@ -1,44 +1,45 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { cartItem, CartServiceService } from '@ntig9/orders';
-import { Product } from '@ntig9/products';
+import { CartServiceService } from '@ntig9/orders';
+import { cartItem, Product } from '@ntig9/main-lib';
 import { ToastrService } from 'ngx-toastr';
 
-
-
 @Component({
-  selector: 'ui-product-item',
-  templateUrl: './product-item.component.html',
-  styleUrls: ['./product-item.component.css']
+    selector: 'ui-product-item',
+    templateUrl: './product-item.component.html',
+    styleUrls: ['./product-item.component.css'],
 })
 export class ProductItemComponent implements OnInit {
+    @Input() products: Product[] = [];
+    productPage = false;
 
-  @Input() products: Product[] = [];
-  productPage = false
+    constructor(
+        private router: Router,
+        private cartToken: CartServiceService,
+        private toastr: ToastrService
+    ) {}
 
-  constructor(private router:Router, private cartToken: CartServiceService, private toastr: ToastrService) { }
-
-  ngOnInit(): void {
-    if(this.router.url === '/products') {
-      this.productPage = true
+    ngOnInit(): void {
+        if (this.router.url === '/products') {
+            this.productPage = true;
+        }
     }
-  }
 
-  addToCart(product: Product) {
-    const data: cartItem = {
-      productID: product._id,
-      quantity: 1
+    addToCart(product: Product) {
+        const data: cartItem = {
+            productID: product._id,
+            quantity: 1,
+        };
+        this.cartToken.setCart(data);
+        this.toastr.success('Product added to cart', 'Success');
     }
-    this.cartToken.setCart(data);
-    this.toastr.success('Product added to cart', 'Success');
-  }
 
-  buyNow(product: Product) {
-    const data: cartItem = {
-      productID: product._id,
-      quantity: 1
+    buyNow(product: Product) {
+        const data: cartItem = {
+            productID: product._id,
+            quantity: 1,
+        };
+        this.cartToken.setCart(data);
+        this.router.navigateByUrl('/cart');
     }
-    this.cartToken.setCart(data);
-    this.router.navigateByUrl('/cart');
-  }
 }

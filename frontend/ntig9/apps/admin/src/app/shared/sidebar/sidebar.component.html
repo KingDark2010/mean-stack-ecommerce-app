@@ -1,50 +1,53 @@
 <div class="admin-sidebar">
-  <div>
-    <img src="/assets/Webp.net-resizeimage.png">
-  </div>
-  <div class="admin-sidebar-links">
-    <ul>
-      <li>
-        <a routerLink="/admin/dashbored" routerLinkActive="active">
-          <i class="bi bi-house-door-fill"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/products" routerLinkActive="active">
-          <i class="bi bi-box-seam"></i>
-          <span>Products</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/categories" routerLinkActive="active">
-          <i class="bi bi-tags-fill"></i>
-          <span>Categories</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/orders" routerLinkActive="active">
-          <i class="bi bi-cart-check-fill"></i>
-          <span>Orders</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/users" routerLinkActive="active">
-          <i class="bi bi-people-fill"></i>
-          <span>Users</span>
-        </a>
-      </li>
-      <!-- return to the store li-->
-      <li>
-        <a routerLink="/">
-          <i class="bi bi-arrow-left-circle-fill"></i>
-          <span>Store</span>
-        </a>
-      <li>
-        <a style="cursor: pointer;" (click)="logoutUser()">
-          <i class="bi bi-box-arrow-right"></i>
-          <span>Logout</span>
-        </a>
-      </li>
-    </ul>
+    <div>
+        <img src="/assets/Webp.net-resizeimage.png" />
+    </div>
+    <div class="admin-sidebar-links">
+        <ul>
+            <li>
+                <a routerLink="/admin/dashbored" routerLinkActive="active">
+                    <i class="bi bi-house-door-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/products" routerLinkActive="active">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Products</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/categories" routerLinkActive="active">
+                    <i class="bi bi-tags-fill"></i>
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/orders" routerLinkActive="active">
+                    <i class="bi bi-cart-check-fill"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/users" routerLinkActive="active">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <!-- return to the store li-->
+            <li>
+                <a routerLink="/">
+                    <i class="bi bi-arrow-left-circle-fill"></i>
+                    <span>Store</span>
+                </a>
+            </li>
+
+            <li>
+                <a style="cursor: pointer" (click)="logoutUser()">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

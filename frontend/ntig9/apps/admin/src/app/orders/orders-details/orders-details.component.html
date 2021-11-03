@@ -1,115 +1,169 @@
 <div class="category">
-  <h1 class="h1">View Order</h1>
-  <h3 class="h6">You can edit order status here</h3>
-  <div class="card my-3">
-    <div class="card" style="width: 200px; height: 35px; padding: 10px; font-weight: bold;">
-      Order Details
+    <h1 class="h1">View Order</h1>
+    <h3 class="h6">You can edit order status here</h3>
+    <div class="card my-3">
+        <div
+            class="card"
+            style="width: 200px; height: 35px; padding: 10px; font-weight: bold"
+        >
+            Order Details
+        </div>
+
+        <form class="my-3 mx-3" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+            <!-- first raw in the form starts here -->
+            <div class="d-flex bd-highlight">
+                <div class="mb-3 p-2 flex-fill bd-highlight">
+                    <label for="exampleFormControlInput1" class="form-label"
+                        >Order ID:</label
+                    >
+                    <p>{{ _id }}</p>
+                </div>
+
+                <div class="mb-3 p-2 flex-fill bd-highlight">
+                    <label for="exampleFormControlInput1" class="form-label"
+                        >Order Date:</label
+                    >
+                    <p>{{ dateOfOrder | date }}</p>
+                </div>
+
+                <div class="mb-3 p-2 flex-fill bd-highlight">
+                    <label for="exampleFormControlInput1" class="form-label"
+                        >Payment Status:</label
+                    >
+                    <p ngSwitch="{{ paymentStatus }}">
+                        <span
+                            *ngSwitchCase="'Pending'"
+                            class="badge bg-primary text-white"
+                            >{{ paymentStatus }}</span
+                        >
+                        <span
+                            *ngSwitchCase="'Paid'"
+                            class="badge bg-success text-white"
+                            >{{ paymentStatus }}</span
+                        >
+                        <span
+                            *ngSwitchCase="'Cancelled'"
+                            class="badge bg-danger text-white"
+                            >{{ paymentStatus }}</span
+                        >
+                    </p>
+                </div>
+            </div>
+            <!-- first raw in the form ends here -->
+            <!-- second raw in the form starts here -->
+
+            <div class="d-flex bd-highlight">
+                <div class="mb-3 p-2 flex-fill bd-highlight">
+                    <label for="exampleFormControlInput1" class="form-label"
+                        >Total Price:</label
+                    >
+                    <p>{{ totalPrice | currency }}</p>
+                </div>
+                <div class="mb-3 p-2 flex-fill bd-highlight">
+                    <label for="exampleFormControlInput1" class="form-label"
+                        >Order Status:</label
+                    >
+                    <select
+                        class="form-select"
+                        aria-label="Default select example"
+                        style="width: 30%"
+                        formControlName="shipmentStatus"
+                    >
+                        <option value="Pending">Pending</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+            <div
+                class="card my-3"
+                style="
+                    width: 200px;
+                    height: 35px;
+                    padding: 10px;
+                    font-weight: bold;
+                    margin-left: -17px;
+                "
+            >
+                Order Items
+            </div>
+            <!-- second raw in the form ends here -->
+            <!-- third raw in the form starts here -->
+            <div class="card my-4">
+                <h5 class="card-header">Items</h5>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Brand</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of orderItems">
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.product.brand }}</td>
+                                <td>{{ item.product.category.name }}</td>
+                                <td>{{ item.product.price | currency }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>
+                                    {{
+                                        item.product.price * item.quantity
+                                            | currency
+                                    }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="float: right; margin-right: 7vw; color: green">
+                        Total Price: {{ totalPrice | currency }}
+                    </div>
+                </div>
+            </div>
+            <!-- third raw in the form ends here -->
+            <!-- fourth raw in the form starts here -->
+            <div
+                class="card my-4"
+                style="
+                    width: 200px;
+                    height: 35px;
+                    padding: 10px;
+                    font-weight: bold;
+                    margin-left: -17px;
+                "
+            >
+                Order Address
+            </div>
+            <!-- fourth raw in the form ends here -->
+            <!-- fifth raw in the form starts here -->
+            <div class="d-flex bd-highlight">
+                <div class="mb-3 p-2 flex-fill bd-highlight">
+                    <p>Order Adress</p>
+                    <p>{{ shippingAddress1 }}</p>
+                </div>
+
+                <div class="mb-3 p-2 flex-fill bd-highlight">
+                    <p>Customer Info</p>
+                    <p>{{ user.firstName }} {{ user.lastName }}</p>
+                </div>
+
+                <div class="mb-3 p-2 flex-fill bd-highlight">
+                    <p>Contact Info</p>
+                    <p>{{ user.email }}</p>
+                    <p>{{ shippingPhone }}</p>
+                </div>
+            </div>
+            <!-- fifth raw in the form ends here -->
+            <!-- sixth raw in the form starts here -->
+            <button type="submit" class="btn btn-primary">Update Order</button>
+            <a (click)="editCancel()" class="btn btn-warning" role="button"
+                >Cancel</a
+            >
+        </form>
     </div>
-
-    <form class="my-3 mx-3" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-      <!-- first raw in the form starts here -->
-      <div class="d-flex bd-highlight">
-        <div class="mb-3 p-2 flex-fill bd-highlight">
-          <label for="exampleFormControlInput1" class="form-label">Order ID:</label>
-          <p>{{_id}}</p>
-        </div>
-
-        <div class="mb-3 p-2 flex-fill bd-highlight">
-          <label for="exampleFormControlInput1" class="form-label">Order Date:</label>
-          <p>{{dateOfOrder | date}}</p>
-        </div>
-
-        <div class="mb-3 p-2 flex-fill bd-highlight">
-          <label for="exampleFormControlInput1" class="form-label">Payment Status:</label>
-          <p ngSwitch="{{ paymentStatus }}">
-            <span *ngSwitchCase="'Pending'" class="badge bg-primary text-white">{{ paymentStatus }}</span>
-            <span *ngSwitchCase="'Paid'" class="badge bg-success text-white">{{ paymentStatus }}</span>
-            <span *ngSwitchCase="'Cancelled'" class="badge bg-danger text-white">{{ paymentStatus }}</span>
-          </p>
-        </div>
-      </div>
-      <!-- first raw in the form ends here -->
-      <!-- second raw in the form starts here -->
-
-      <div class="d-flex bd-highlight">
-        <div class="mb-3 p-2 flex-fill bd-highlight">
-          <label for="exampleFormControlInput1" class="form-label">Total Price:</label>
-          <p>{{totalPrice | currency}}</p>
-        </div>
-        <div class="mb-3 p-2 flex-fill bd-highlight">
-          <label for="exampleFormControlInput1" class="form-label">Order Status:</label>
-          <select class="form-select" aria-label="Default select example" style="width: 30%;" formControlName="shipmentStatus">
-            <option value="Pending">Pending</option>
-            <option value="Shipped">Shipped</option>
-            <option value="Delivered">Delivered</option>
-            <option value="Cancelled">Cancelled</option>
-          </select>
-        </div>
-      </div>
-      <div class="card my-3" style="width: 200px; height: 35px; padding: 10px; font-weight: bold; margin-left: -17px;">
-        Order Items
-      </div>
-      <!-- second raw in the form ends here -->
-      <!-- third raw in the form starts here -->
-      <div class="card my-4">
-        <h5 class="card-header">Items</h5>
-        <div class="card-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Category</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Subtotal</th>
-              </tr>
-            </thead>
-            <tbody *ngFor="let item of orderItems">
-              <tr>
-                <td>{{item.product.name}}</td>
-                <td>{{item.product.brand}}</td>
-                <td>{{item.product.category.name}}</td>
-                <td>{{item.product.price | currency}}</td>
-                <td>{{item.quantity}}</td>
-                <td>{{item.product.price * item.quantity | currency}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="float: right; margin-right: 7vw; color: green;">
-            Total Price: {{totalPrice | currency}}
-          </div>
-        </div>
-      </div>
-      <!-- third raw in the form ends here -->
-      <!-- fourth raw in the form starts here -->
-      <div class="card my-4" style="width: 200px; height: 35px; padding: 10px; font-weight: bold; margin-left: -17px;">
-        Order Address
-      </div>
-      <!-- fourth raw in the form ends here -->
-      <!-- fifth raw in the form starts here -->
-      <div class="d-flex bd-highlight">
-        <div class="mb-3 p-2 flex-fill bd-highlight">
-          <p>Order Adress</p>
-          <p>{{shippingAddress1}}</p>
-        </div>
-
-        <div class="mb-3 p-2 flex-fill bd-highlight">
-          <p>Customer Info</p>
-          <p>{{user.firstName}} {{user.lastName}}</p>
-        </div>
-
-        <div class="mb-3 p-2 flex-fill bd-highlight">
-          <p>Contact Info</p>
-          <p>{{user.email}}</p>
-          <p>{{shippingPhone}}</p>
-        </div>
-      </div>
-      <!-- fifth raw in the form ends here -->
-      <!-- sixth raw in the form starts here -->
-      <button type="submit" class="btn btn-primary">Update Order</button>
-      <a (click)="editCancel()" class="btn btn-warning" role="button">Cancel</a>
-    </form>
-  </div>
 </div>
-

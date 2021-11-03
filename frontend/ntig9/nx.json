@@ -26,32 +26,36 @@
             }
         ]
     },
-    "projects": {
-        "admin": {
-            "tags": []
+    "cli": {
+        "defaultCollection": "@nrwl/angular",
+        "packageManager": "npm"
+    },
+    "generators": {
+        "@nrwl/angular": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            },
+            "storybook-configuration": {
+                "linter": "eslint"
+            }
         },
-        "admin-e2e": {
-            "tags": [],
-            "implicitDependencies": ["admin"]
+        "@nrwl/angular:application": {
+            "style": "css",
+            "linter": "eslint",
+            "unitTestRunner": "jest",
+            "e2eTestRunner": "cypress"
         },
-        "ecommerce-store": {
-            "tags": []
+        "@nrwl/angular:library": {
+            "style": "css",
+            "linter": "eslint",
+            "unitTestRunner": "jest"
         },
-        "ecommerce-store-e2e": {
-            "tags": [],
-            "implicitDependencies": ["ecommerce-store"]
-        },
-        "orders": {
-            "tags": []
-        },
-        "products": {
-            "tags": []
-        },
-        "ui": {
-            "tags": []
-        },
-        "users": {
-            "tags": []
+        "@nrwl/angular:component": {
+            "style": "css"
         }
-    }
+    },
+    "defaultProject": "ecommerce-store"
 }

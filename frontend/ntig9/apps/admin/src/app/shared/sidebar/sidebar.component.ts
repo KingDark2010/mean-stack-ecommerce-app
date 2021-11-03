@@ -1,32 +1,35 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsersService } from '@ntig9/products';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { UserLoginService } from '@ntig9/users';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'admin-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+    selector: 'admin-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnDestroy {
+    private ngUnsubscribe = new Subject();
+    token = localStorage.getItem('AuthToken');
+    constructor(
+        private userLoginService: UserLoginService,
+        private router: Router
+    ) {}
 
-  private ngUnsubscribe = new Subject();
-  token = localStorage.getItem('AuthToken');
-  constructor(private usersServices: UsersService, private router: Router) { }
+    logoutUser() {
+        this.userLoginService
+            .logout(this.token)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(() => {
+                localStorage.removeItem('AuthToken');
+                this.router.navigate(['/login']);
+            });
+    }
 
-  logoutUser() {
-    this.usersServices.logout(this.token).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      () => {
-        localStorage.removeItem('AuthToken');
-        this.router.navigate(['/login']);
-      }
-    );
-  }
-
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
+    }
 }

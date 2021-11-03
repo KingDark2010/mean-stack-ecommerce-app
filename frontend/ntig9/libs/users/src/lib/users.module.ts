@@ -8,15 +8,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export const usersRoutes: Route[] = [];
 
 const routes: Route[] = [
-  { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent}
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({
-    imports: [CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, FormsModule],
-    declarations: [
-      LoginComponent,
-      RegisterComponent
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        ReactiveFormsModule,
+        FormsModule,
     ],
+    declarations: [LoginComponent, RegisterComponent],
 })
 export class UsersModule {}

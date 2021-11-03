@@ -1,50 +1,106 @@
 <div class="category">
-  <h1 class="h1"> {{title}}</h1>
-  <div class="card">
-
-    <form class="my-3 mx-3" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-      <div class="row mb-3">
-        <div class="col mb-3 form-floating">
-          <input type="text" class="form-control" id="floatingInput1" placeholder="firstName" formControlName="firstName">
-          <label for="floatingInput">First Name</label>
-        </div>
-        <div class="col mb-3 form-floating">
-          <input type="text" class="form-control" id="floatingInput2" placeholder="LastName" formControlName="lastName">
-          <label for="floatingInput">Last Name</label>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput3" placeholder="name@example.com" formControlName="email">
-          <label for="floatingInput">Email address</label>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col form-floating mb-3">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" formControlName="password">
-          <label for="floatingPassword">Password</label>
-        </div>
-        <div class="col form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput4" placeholder="Phone" formControlName="phone">
-          <label for="floatingInput">Phone</label>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col form-check form-switch mx-5">
-          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" formControlName="isActive">
-          <label class="form-check-label" for="flexSwitchCheckDefault">Active</label>
-        </div>
-        <div class="col form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" formControlName="isSeller">
-          <label class="form-check-label" for="flexSwitchCheckDefault">Seller</label>
-        </div>
-        <div class="col form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" formControlName="isAdmin">
-          <label class="form-check-label" for="flexSwitchCheckDefault">Admin</label>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary">{{btn}}</button>
-      <a (click)="editCancel()" class="btn btn-warning" role="button">Cancel</a>
-    </form>
-  </div>
+    <h1 class="h1">{{ title }}</h1>
+    <div class="card">
+        <form
+            class="my-3 mx-3"
+            [formGroup]="categoryForm"
+            (ngSubmit)="onSubmit()"
+        >
+            <div class="row mb-3">
+                <div class="col mb-3 form-floating">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput1"
+                        placeholder="firstName"
+                        formControlName="firstName"
+                    />
+                    <label for="floatingInput">First Name</label>
+                </div>
+                <div class="col mb-3 form-floating">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput2"
+                        placeholder="LastName"
+                        formControlName="lastName"
+                    />
+                    <label for="floatingInput">Last Name</label>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col form-floating mb-3">
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="floatingInput3"
+                        placeholder="name@example.com"
+                        formControlName="email"
+                    />
+                    <label for="floatingInput">Email address</label>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col form-floating mb-3">
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="floatingPassword"
+                        placeholder="Password"
+                        formControlName="password"
+                    />
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <div class="col form-floating mb-3">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput4"
+                        placeholder="Phone"
+                        formControlName="phone"
+                    />
+                    <label for="floatingInput">Phone</label>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col form-check form-switch mx-5">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckDefault"
+                        formControlName="isActive"
+                    />
+                    <label class="form-check-label" for="flexSwitchCheckDefault"
+                        >Active</label
+                    >
+                </div>
+                <div class="col form-check form-switch">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckDefault"
+                        formControlName="isSeller"
+                    />
+                    <label class="form-check-label" for="flexSwitchCheckDefault"
+                        >Seller</label
+                    >
+                </div>
+                <div class="col form-check form-switch">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckDefault"
+                        formControlName="isAdmin"
+                    />
+                    <label class="form-check-label" for="flexSwitchCheckDefault"
+                        >Admin</label
+                    >
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">{{ btn }}</button>
+            <a (click)="editCancel()" class="btn btn-warning" role="button"
+                >Cancel</a
+            >
+        </form>
+    </div>
 </div>

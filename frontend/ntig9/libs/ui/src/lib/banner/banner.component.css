@@ -1,15 +1,15 @@
 .slide-in {
-  animation: slide-in 0.9s ease-in-out;
+    animation: slide-in 0.9s ease-in-out;
 }
 
 @keyframes slide-in {
-  0% {
-    transform: translateX(-100%);
-  }
-  80% {
-    transform: translateX(10%);
-  }
-  100% {
-    transform: translateX(0);
-  }
+    0% {
+        transform: translateX(-100%);
+    }
+    80% {
+        transform: translateX(10%);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }

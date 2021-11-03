@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import {UiModule} from '@ntig9/ui';
+import { UiModule } from '@ntig9/ui';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProductsComponent } from './pages/products/products.component';
@@ -21,21 +21,43 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'products', component: ProductsComponent },
-  { path: "categoryproducts/:categoryname", component: ProductsComponent },
-  { path: 'product/:id', component: SingleProductComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'thankyou', component: ThankYouComponent },
-  { path: 'profile', component: UserProfileComponent },
-  { path: 'admin', loadChildren: () => AdminAppModule },
-  { path: '**', component: PageNotFoundComponent }
-  ]
+    { path: '', component: HomeComponent },
+    { path: 'products', component: ProductsComponent },
+    { path: 'categoryproducts/:categoryname', component: ProductsComponent },
+    { path: 'product/:id', component: SingleProductComponent },
+    { path: 'cart', component: CartComponent },
+    { path: 'checkout', component: CheckoutComponent },
+    { path: 'thankyou', component: ThankYouComponent },
+    { path: 'profile', component: UserProfileComponent },
+    { path: 'admin', loadChildren: () => AdminAppModule },
+    { path: '**', component: PageNotFoundComponent },
+];
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ProductsComponent, NavbarComponent, FooterComponent, SingleProductComponent, CartComponent, CheckoutComponent, ThankYouComponent, UserProfileComponent,PageNotFoundComponent],
-  imports: [BrowserModule,BrowserAnimationsModule, RouterModule.forRoot(routes), UiModule, HttpClientModule,FormsModule, ReactiveFormsModule, ToastrModule.forRoot(), AdminAppModule.forRoot()],
-  providers: [],
-  bootstrap: [AppComponent],
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        ProductsComponent,
+        NavbarComponent,
+        FooterComponent,
+        SingleProductComponent,
+        CartComponent,
+        CheckoutComponent,
+        ThankYouComponent,
+        UserProfileComponent,
+        PageNotFoundComponent,
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(routes),
+        UiModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ToastrModule.forRoot(),
+        AdminAppModule.forRoot(),
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

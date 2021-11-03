@@ -1,45 +1,44 @@
-
 .admin-sidebar {
-  position: fixed;
-  width: 10.5vw;
-  background-color: lightblue;
-  height: 100%;
+    position: fixed;
+    width: 10.5vw;
+    background-color: lightblue;
+    height: 100%;
 }
 
 .admin-sidebar img {
-  padding: 40px;
-  width: 100%;
+    padding: 40px;
+    width: 100%;
 }
 
 .admin-sidebar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 admin-sidebar ul li {
-  display: block;
-  width: 100%;
+    display: block;
+    width: 100%;
 }
 
 .admin-sidebar ul li a {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  text-decoration: none;
-  color: black;
-  font-size: 16px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
 }
 
 .admin-sidebar ul li a:hover {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 .admin-sidebar ul li a.active {
-  background-color: #4CAF50;
-  color: white;
+    background-color: #4caf50;
+    color: white;
 }
 
 .admin-sidebar ul li i {
-  padding: 10px;
+    padding: 10px;
 }

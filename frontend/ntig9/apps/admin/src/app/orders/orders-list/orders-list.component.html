@@ -1,46 +1,89 @@
 <div class="admin-category">
-  <h1 class="h1">orders</h1>
-  <div class="card">
-    <h5 class="card-header">List of orders</h5>
-    <div class="card-body">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Order ID</th>
-            <th scope="col">Customer</th>
-            <th scope="col">Country</th>
-            <th scope="col">Shipment Status</th>
-            <th scope="col">Payment Status</th>
-            <th scope="col">Total Price</th>
-            <th scope="col">Order Date</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let order of Orders">
-          <tr>
-            <td>{{ order._id }}</td>
-            <td>{{ order.user.email }}</td>
-            <td>{{ order.shippingCountry }}</td>
-            <td ngSwitch="{{order.shipmentStatus}}">
-              <span *ngSwitchCase="'Pending'" class="badge bg-primary text-white">{{order.shipmentStatus}}</span>
-              <span *ngSwitchCase="'Shipped'" class="badge bg-info text-dark">{{order.shipmentStatus}}</span>
-              <span *ngSwitchCase="'Delivered'" class="badge bg-success text-white">{{order.shipmentStatus}}</span>
-              <span *ngSwitchCase="'Cancelled'" class="badge bg-danger text-white">{{order.shipmentStatus}}</span>
-            </td>
-            <td ngSwitch="{{ order.paymentStatus }}">
-              <span *ngSwitchCase="'Pending'" class="badge bg-primary text-white">{{ order.paymentStatus }}</span>
-              <span *ngSwitchCase="'Paid'" class="badge bg-success text-white">{{ order.paymentStatus }}</span>
-              <span *ngSwitchCase="'Cancelled'" class="badge bg-danger text-white">{{ order.paymentStatus }}</span>
-            </td>
-            <td>{{ order.totalPrice | currency}}</td>
-            <td>{{ order.dateOfOrder | date }}</td>
-            <td>
-              <a routerLink="/admin/orders/details/{{order._id}}" type="button" class="btn btn-outline-secondary mx-3 "><i class="bi bi-eye"></i></a>
-              <button (click)="deleteOrder(order._id)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-trash-fill"></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <h1 class="h1">orders</h1>
+    <div class="card">
+        <h5 class="card-header">List of orders</h5>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Shipment Status</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let order of Orders">
+                    <tr>
+                        <td>{{ order._id }}</td>
+                        <td>{{ order.user.email }}</td>
+                        <td>{{ order.shippingCountry }}</td>
+                        <td ngSwitch="{{ order.shipmentStatus }}">
+                            <span
+                                *ngSwitchCase="'Pending'"
+                                class="badge bg-primary text-white"
+                                >{{ order.shipmentStatus }}</span
+                            >
+                            <span
+                                *ngSwitchCase="'Shipped'"
+                                class="badge bg-info text-dark"
+                                >{{ order.shipmentStatus }}</span
+                            >
+                            <span
+                                *ngSwitchCase="'Delivered'"
+                                class="badge bg-success text-white"
+                                >{{ order.shipmentStatus }}</span
+                            >
+                            <span
+                                *ngSwitchCase="'Cancelled'"
+                                class="badge bg-danger text-white"
+                                >{{ order.shipmentStatus }}</span
+                            >
+                        </td>
+                        <td ngSwitch="{{ order.paymentStatus }}">
+                            <span
+                                *ngSwitchCase="'Pending'"
+                                class="badge bg-primary text-white"
+                                >{{ order.paymentStatus }}</span
+                            >
+                            <span
+                                *ngSwitchCase="'Paid'"
+                                class="badge bg-success text-white"
+                                >{{ order.paymentStatus }}</span
+                            >
+                            <span
+                                *ngSwitchCase="'Cancelled'"
+                                class="badge bg-danger text-white"
+                                >{{ order.paymentStatus }}</span
+                            >
+                        </td>
+                        <td>{{ order.totalPrice | currency }}</td>
+                        <td>{{ order.dateOfOrder | date }}</td>
+                        <td>
+                            <a
+                                routerLink="/admin/orders/details/{{
+                                    order._id
+                                }}"
+                                type="button"
+                                class="btn btn-outline-secondary mx-3"
+                                ><i class="bi bi-eye"></i
+                            ></a>
+                            <button
+                                (click)="deleteOrder(order._id)"
+                                type="button"
+                                class="btn btn-outline-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop"
+                            >
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 </div>

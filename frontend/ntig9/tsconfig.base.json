@@ -15,6 +15,7 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@ntig9/main-lib": ["libs/main-lib/src/index.ts"],
             "@ntig9/orders": ["libs/orders/src/index.ts"],
             "@ntig9/products": ["libs/products/src/index.ts"],
             "@ntig9/ui": ["libs/ui/src/index.ts"],

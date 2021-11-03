@@ -1,7 +1,10 @@
 .product-img {
-  display: block; width: 90px; height: 90px; margin-top: -50%;
+    display: block;
+    width: 90px;
+    height: 90px;
+    margin-top: -50%;
 }
 
 .product-page {
-  width: 33%;
+    width: 33%;
 }
